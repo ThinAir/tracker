@@ -28,7 +28,7 @@ libtracker_sparql_intermediate = static_library('tracker-sparql',
     # build system as well.
     # FIXME: we also can't depend on this in the TrackerMiner GIR, which
     # probably breaks stuff
-    vala_gir: '../Tracker-' + tracker_api_version + '.gir',
+    vala_gir: 'Tracker-' + tracker_api_version + '.gir',
     vala_args: [
         '--debug',
         '--includedir', 'libtracker-sparql',
@@ -86,6 +86,20 @@ install_headers(
 meson.add_install_script('../install-generated-header.sh',
     join_paths(meson.current_build_dir(), 'tracker-generated.h'),
     join_paths(get_option('prefix'), get_option('includedir'), 'tracker-1.0', 'libtracker-sparql'))
+
+custom_target('tracker-sparql-typelib',
+    command: ['g-ir-compiler', '--output', '@OUTPUT@', join_paths(meson.current_build_dir(), 'Tracker-1.0.gir')],
+    #input: join_paths(meson.current_build_dir(), 'Tracker-1.0.gir'),
+    output: 'Tracker-1.0.typelib',
+    depends: libtracker_sparql_intermediate,
+    install: true,
+    install_dir: join_paths(get_option('libdir'), 'girepository-1.0'))
+
+# FIXME: reusing the same script to install the .gir; see
+# <https://github.com/mesonbuild/meson/issues/891>.
+meson.add_install_script('../install-generated-header.sh',
+    join_paths(meson.current_build_dir(), 'Tracker-1.0.gir'),
+    join_paths(get_option('prefix'), get_option('datadir'), 'gir-1.0'))
 
 # FIXME: we can't depend properly on the generated .vapi to do this.
 custom_target('tracker-sparql-' + tracker_api_version + '.vapi',
