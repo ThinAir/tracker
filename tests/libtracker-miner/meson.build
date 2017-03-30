@@ -9,28 +9,28 @@ test_c_args = [
 crawler_test = executable('tracker-crawler-test',
   'tracker-crawler-test.c',
   shared_libtracker_miner_crawler_sources,
-  dependencies: [tracker_common_dep, tracker_miner_dep],
+  dependencies: [tracker_common_dep, tracker_miner_dep, tracker_sparql_dep],
   c_args: test_c_args
 )
 test('miner-crawler', crawler_test)
 
 file_notifier_test = executable('tracker-file-notifier-test',
   'tracker-file-notifier-test.c',
-  dependencies: [tracker_common_dep, tracker_miner_dep],
+  dependencies: [tracker_common_dep, tracker_miner_dep, tracker_sparql_dep],
   c_args: test_c_args
 )
 test('miner-file-notifier', file_notifier_test)
 
 file_system_test = executable('tracker-file-system-test',
   'tracker-file-system-test.c',
-  dependencies: [tracker_common_dep, tracker_miner_dep],
+  dependencies: [tracker_common_dep, tracker_miner_dep, tracker_sparql_dep],
   c_args: test_c_args
 )
 test('miner-file-system', file_system_test)
 
 indexing_tree_test = executable('tracker-indexing-tree-test',
   'tracker-indexing-tree-test.c',
-  dependencies: [tracker_common_dep, tracker_miner_dep],
+  dependencies: [tracker_common_dep, tracker_miner_dep, tracker_sparql_dep],
   c_args: test_c_args
 )
 test('miner-indexing-tree', indexing_tree_test)
@@ -38,7 +38,7 @@ test('miner-indexing-tree', indexing_tree_test)
 monitor_test = executable('tracker-monitor-test',
   'tracker-monitor-test.c',
   shared_libtracker_miner_monitor_sources,
-  dependencies: [tracker_common_dep, tracker_miner_dep],
+  dependencies: [tracker_common_dep, tracker_miner_dep, tracker_sparql_dep],
   c_args: test_c_args
 )
 test('miner-monitor', monitor_test,
@@ -47,14 +47,14 @@ test('miner-monitor', monitor_test,
 
 priority_queue_test = executable('tracker-priority-queue-test',
   'tracker-priority-queue-test.c',
-  dependencies: [tracker_common_dep, tracker_miner_dep],
+  dependencies: [tracker_common_dep, tracker_miner_dep, tracker_sparql_dep],
   c_args: test_c_args
 )
 test('miner-priority-queue', priority_queue_test)
 
 task_pool_test = executable('tracker-task-pool-test',
   'tracker-task-pool-test.c',
-  dependencies: [tracker_common_dep, tracker_miner_dep],
+  dependencies: [tracker_common_dep, tracker_miner_dep, tracker_sparql_dep],
   c_args: test_c_args
 )
 test('miner-task-pool', task_pool_test)
