@@ -23,6 +23,8 @@
 
 #include <glib.h>
 
+#include <magic.h>
+
 #include <gsf/gsf.h>
 #include <gsf/gsf-doc-meta-data.h>
 #include <gsf/gsf-infile.h>
@@ -36,6 +38,16 @@
 
 #include "tracker-main.h"
 #include "tracker-gsf.h"
+
+//dummy timed wait
+void
+pop_data_timed (double seconds);
+
+void get_rid(gpointer f){
+    if (f) {
+        g_string_free(f,FALSE);
+    }
+}
 
 typedef enum {
 	MS_OFFICE_XML_TAG_INVALID,
@@ -56,7 +68,9 @@ typedef enum {
 	MS_OFFICE_XML_TAG_WORD_TEXT,
 	MS_OFFICE_XML_TAG_XLS_SHARED_TEXT,
 	MS_OFFICE_XML_TAG_DOCUMENT_CORE_DATA,
-	MS_OFFICE_XML_TAG_DOCUMENT_TEXT_DATA
+	MS_OFFICE_XML_TAG_DOCUMENT_TEXT_DATA,
+    MS_OFFICE_XML_TAG_XLS_NUMBER_VALUE,
+    MS_OFFICE_XML_TAG_XLS_SHARED_TEXT_REF,
 } MsOfficeXMLTagType;
 
 typedef enum {
@@ -90,6 +104,8 @@ typedef struct {
 	guint has_content_last_modified : 1;
 	gboolean title_already_set;
 	gboolean generator_already_set;
+    gboolean is_text_ref;
+
 
 	/* Content-parsing specific things */
 	GString *content;
@@ -98,6 +114,9 @@ typedef struct {
 	gboolean preserve_attribute_present;
 	GTimer *timer;
 	GList *parts;
+    GArray *shared_strings;
+    
+    TrackerExtractInfo *extract_info;
 } MsOfficeXMLParserInfo;
 
 static void msoffice_xml_content_parse_start       (GMarkupParseContext  *context,
@@ -243,6 +262,16 @@ msoffice_xml_content_parse_start (GMarkupParseContext  *context,
 		break;
 
 	case FILE_TYPE_XLSX:
+       if (g_ascii_strcasecmp (element_name, "c") == 0) {
+           info->is_text_ref = FALSE;
+                for (a = attribute_names, v = attribute_values; *a; ++a, ++v) {
+                    if (g_ascii_strcasecmp (*a, "t") == 0) {
+                        if (g_ascii_strcasecmp (*v, "s") == 0) {
+                            info->is_text_ref = TRUE;
+                        }
+                    }
+                }
+            }
 		if (g_ascii_strcasecmp (element_name, "sheet") == 0) {
 			for (a = attribute_names, v = attribute_values; *a; ++a, ++v) {
 				if (g_ascii_strcasecmp (*a, "name") == 0) {
@@ -250,9 +279,20 @@ msoffice_xml_content_parse_start (GMarkupParseContext  *context,
 				}
 			}
 
-		} else if (g_ascii_strcasecmp (element_name, "t") == 0) {
-			info->tag_type = MS_OFFICE_XML_TAG_XLS_SHARED_TEXT;
 		}
+        else if(g_ascii_strcasecmp (element_name, "sst") == 0){
+            for (a = attribute_names, v = attribute_values; *a; ++a, ++v) {
+                if (g_ascii_strcasecmp (*a, "uniqueCount") == 0) {
+                    info->shared_strings = g_array_sized_new( FALSE, FALSE, sizeof(GString *), atoi (*v) );
+                }
+            }
+        }
+        else if (g_ascii_strcasecmp (element_name, "t") == 0) {
+			info->tag_type = MS_OFFICE_XML_TAG_XLS_SHARED_TEXT;
+        }else if (g_ascii_strcasecmp (element_name, "v") == 0) {
+            info->tag_type = MS_OFFICE_XML_TAG_XLS_NUMBER_VALUE;
+        }
+            
 		break;
 
 	case FILE_TYPE_PPTX:
@@ -327,15 +367,46 @@ msoffice_xml_content_parse (GMarkupParseContext  *context,
 		break;
 
 	case MS_OFFICE_XML_TAG_XLS_SHARED_TEXT:
-		if (atoi (text) == 0)  {
-			tracker_text_validate_utf8 (text,
-			                            MIN (text_len, info->bytes_pending),
-			                            &info->content,
-			                            &written_bytes);
-			g_string_append_c (info->content, ' ');
-			info->bytes_pending -= written_bytes;
-		}
+        {
+		//if (atoi (text) == 0)  {
+			//tracker_text_validate_utf8 (text,
+			//                            MIN (text_len, info->bytes_pending),
+			//                            &info->content,
+			//                            &written_bytes);
+			//g_string_append_c (info->content, ' ');
+			//info->bytes_pending -= written_bytes;
+            GString *shared_string = g_string_new_len(text,text_len);
+            g_array_append_val(info->shared_strings,shared_string);
+            //g_string_free(shared_string,FALSE);
+            
+		//}
+        }
 		break;
+    case MS_OFFICE_XML_TAG_XLS_NUMBER_VALUE:
+            if (info->shared_strings && info->is_text_ref) {
+                int index = atoi(text);
+                if (info->shared_strings && index<info->shared_strings->len) {
+                    GString *reffered_text = g_array_index (info->shared_strings, GString*, index);
+                    tracker_text_validate_utf8 (reffered_text->str,
+                                                MIN (reffered_text->len, info->bytes_pending),
+                                                &info->content,
+                                                &written_bytes);
+                    //g_string_free(reffered_text,FALSE);
+                    g_string_append_c (info->content, ' ');
+                    info->bytes_pending -= written_bytes;
+                }
+
+            }
+            else{
+            tracker_text_validate_utf8 (text,
+                                            MIN (text_len, info->bytes_pending),
+                                            &info->content,
+                                            &written_bytes);
+    
+            g_string_append_c (info->content, ' ');
+                info->bytes_pending -= written_bytes;
+            }
+            break;
 
 	/* Ignore tags that may not happen inside the text subdocument */
 	case MS_OFFICE_XML_TAG_TITLE:
@@ -356,6 +427,20 @@ msoffice_xml_content_parse (GMarkupParseContext  *context,
 	case MS_OFFICE_XML_TAG_INVALID:
 		break;
 	}
+    
+    if (info->content && info->content->len > 100*1024) {
+        parsed_data_availble cb = tracker_extract_info_get_callback(info->extract_info);
+        if (cb) {
+            GFile *file = tracker_extract_info_get_file (info->extract_info);
+            gchar *path = g_file_get_path (file);
+            gchar *data = g_string_free (info->content, FALSE);
+            cb(data,tracker_extract_info_get_callback_context(info->extract_info),path);
+            g_free(data);
+            g_free(path);
+            info->content = g_string_new ("");
+            pop_data_timed (0.2);
+        }
+    }
 }
 
 /* ------------------------- METADATA files parsing -----------------------------------*/
@@ -428,6 +513,7 @@ msoffice_xml_metadata_parse (GMarkupParseContext  *context,
 	case MS_OFFICE_XML_TAG_WORD_TEXT:
 	case MS_OFFICE_XML_TAG_SLIDE_TEXT:
 	case MS_OFFICE_XML_TAG_XLS_SHARED_TEXT:
+        case MS_OFFICE_XML_TAG_XLS_NUMBER_VALUE:
 		break;
 
 	case MS_OFFICE_XML_TAG_TITLE:
@@ -716,12 +802,21 @@ msoffice_xml_content_types_parse_start (GMarkupParseContext  *context,
 	      g_ascii_strcasecmp (content_type, "application/vnd.openxmlformats-officedocument.drawingml.diagramData+xml") == 0)) ||
 	    (info->file_type == FILE_TYPE_XLSX &&
 	     (g_ascii_strcasecmp (content_type, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml") == 0 ||
-	      g_ascii_strcasecmp (content_type, "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml") == 0))) {
+          g_ascii_strcasecmp (content_type, "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml") == 0 ||
+          g_ascii_strcasecmp (content_type, "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml")==0))) {
+            //printf("part name %s: %s \n",part_name,content_type);
 		if (info->file_type == FILE_TYPE_PPTX) {
 			info->parts = g_list_insert_sorted (info->parts, g_strdup (part_name + 1),
 			                                    compare_slide_name);
 		} else {
-			info->parts = g_list_append (info->parts, g_strdup (part_name + 1));
+            //printf("adding part name %s \n",part_name);
+            //process shared strings before the sheets since the sheet refers to shared strings
+            if ( g_ascii_strcasecmp (content_type, "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml") == 0) {
+                info->parts = g_list_prepend (info->parts, g_strdup (part_name + 1));
+            }
+            else{
+                info->parts = g_list_append (info->parts, g_strdup (part_name + 1));
+            }
 		}
 	}
 }
@@ -749,15 +844,52 @@ msoffice_xml_get_file_type (const gchar *uri)
 	                               G_FILE_QUERY_INFO_NONE,
 	                               NULL,
 	                               NULL);
+    //const char *mime;
+//    magic_t magic;
+//    
+//    printf("Getting magic from %s\n", g_file_get_path (file));
+//    
+//    magic = magic_open(MAGIC_MIME_TYPE);
+//    magic_load(magic, NULL);
+//    magic_compile(magic, NULL);
+//    mime_used = magic_file(magic, g_file_get_path (file));
+//    printf("got magic from %s\n", mime_used);
+//
+//    magic_close(magic);
+    
+    magic_t magic_cookie;
+    /*MAGIC_MIME tells magic to return a mime of the file, but you can specify different things*/
+    magic_cookie = magic_open(MAGIC_MIME_TYPE);
+    if (magic_cookie == NULL) {
+        printf("unable to initialize magic library\n");
+        return FILE_TYPE_INVALID;
+    }
+    
+    //printf("Loading default magic database\n");
+    if (magic_load(magic_cookie, NULL) != 0) {
+        //printf("cannot load magic database - %s\n", magic_error(magic_cookie));
+        magic_close(magic_cookie);
+        return FILE_TYPE_INVALID;
+    }
+    gchar *file_path = g_file_get_path (file);
+    mime_used = g_strdup(magic_file(magic_cookie, file_path));
+
+    g_debug("mime used and path %s : %s and erro %s",mime_used ,file_path , magic_error(magic_cookie));
 	g_object_unref (file);
-	if (!file_info) {
+    g_free(file_path);
+	if (!file_info || !mime_used) {
 		g_warning ("Could not get GFileInfo for URI:'%s'", uri);
 		return FILE_TYPE_INVALID;
 	}
+    magic_close(magic_cookie);
 
 	/* Get Content Type from GFileInfo. The constant string will be valid
 	 * as long as the file info reference is valid */
-	mime_used = g_file_info_get_content_type (file_info);
+	//mime_used = g_file_info_get_content_type (file_info);
+    
+    
+    //printf("%s\n", mime_used);
+    
 	if (g_ascii_strcasecmp (mime_used, "application/vnd.openxmlformats-officedocument.wordprocessingml.document") == 0) {
 		/* MsOffice Word document */
 		file_type = FILE_TYPE_DOCX;
@@ -772,9 +904,9 @@ msoffice_xml_get_file_type (const gchar *uri)
 		file_type = FILE_TYPE_XLSX;
 	} else {
 		g_message ("Mime type was not recognised:'%s'", mime_used);
-		file_type = FILE_TYPE_INVALID;
 	}
 
+    g_free(mime_used);
 	g_object_unref (file_info);
 
 	return file_type;
@@ -798,11 +930,13 @@ extract_content (MsOfficeXMLParserInfo *info)
 			g_debug ("Skipping '%s' as already reached max bytes to extract",
 			         part_name);
 			break;
-		} else if (g_timer_elapsed (info->timer, NULL) > 5) {
-			g_debug ("Skipping '%s' as already reached max time to extract",
-			         part_name);
-			break;
-		} else {
+		}
+//        else if (g_timer_elapsed (info->timer, NULL) > 1000000) {
+//			g_debug ("Skipping '%s' as already reached max time to extract",
+//			         part_name);
+//			break;
+//		}
+        else {
 			xml_read (info, part_name, MS_OFFICE_XML_TAG_DOCUMENT_TEXT_DATA);
 		}
 	}
@@ -811,6 +945,7 @@ extract_content (MsOfficeXMLParserInfo *info)
 G_MODULE_EXPORT gboolean
 tracker_extract_get_metadata (TrackerExtractInfo *extract_info)
 {
+    
 	MsOfficeXMLParserInfo info = { 0 };
 	MsOfficeXMLFileType file_type;
 	TrackerResource *metadata;
@@ -849,6 +984,7 @@ tracker_extract_get_metadata (TrackerExtractInfo *extract_info)
 	info.title_already_set = FALSE;
 	info.generator_already_set = FALSE;
 	info.bytes_pending = tracker_config_get_max_bytes (config);
+    info.extract_info = extract_info;
 
 	/* Create content-type parser context */
 	context = g_markup_parse_context_new (&content_types_parser,
@@ -872,9 +1008,9 @@ tracker_extract_get_metadata (TrackerExtractInfo *extract_info)
 	extract_content (&info);
 
 	/* If we got any content, add it */
+    printf("done %s \n",uri);
 	if (info.content) {
 		gchar *content;
-
 		content = g_string_free (info.content, FALSE);
 		info.content = NULL;
 
@@ -888,6 +1024,16 @@ tracker_extract_get_metadata (TrackerExtractInfo *extract_info)
 		g_list_foreach (info.parts, (GFunc) g_free, NULL);
 		g_list_free (info.parts);
 	}
+    
+    if (info.shared_strings) {
+        for (int i=0; i<info.shared_strings->len; i++) {
+            GString *reffered_text = g_array_index (info.shared_strings, GString*, i);
+            g_string_free(reffered_text,TRUE);
+        }
+        //g_array_set_clear_func(info.shared_strings,get_rid);
+        g_array_free (info.shared_strings, TRUE);
+
+    }
 
 	g_timer_destroy (info.timer);
 	g_markup_parse_context_free (context);
@@ -898,3 +1044,35 @@ tracker_extract_get_metadata (TrackerExtractInfo *extract_info)
 
 	return TRUE;
 }
+
+
+//dummy timed wait
+
+
+void
+pop_data_timed (double seconds)
+{
+    GMutex data_mutex;
+    GCond data_cond;
+    
+    g_mutex_init(&data_mutex);
+    g_cond_init(&data_cond);
+    gint64 end_time;
+    gpointer data = NULL;
+    
+    g_mutex_lock (&data_mutex);
+    
+    end_time = g_get_monotonic_time () + seconds * G_TIME_SPAN_SECOND;
+        if (!g_cond_wait_until (&data_cond, &data_mutex, end_time))
+        {
+            // timeout has passed.
+            g_mutex_unlock (&data_mutex);
+            goto done;
+        }
+    
+done:
+    g_cond_clear(&data_cond);
+    g_mutex_unlock (&data_mutex);
+    g_mutex_clear(&data_mutex);
+}
+

@@ -1,0 +1,242 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		607DA8681F042EAF0042C9E8 /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
+		607DA8691F042EAF0042C9E8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		607DA86A1F042EAF0042C9E8 /* aclocal.m4 */ = {isa = PBXFileReference; lastKnownFileType = text; path = aclocal.m4; sourceTree = "<group>"; };
+		607DA86B1F042EAF0042C9E8 /* AUTHORS */ = {isa = PBXFileReference; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
+		607DA86C1F042EAF0042C9E8 /* autogen.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = autogen.sh; sourceTree = "<group>"; };
+		607DA86D1F042EAF0042C9E8 /* autom4te.cache */ = {isa = PBXFileReference; lastKnownFileType = folder; path = autom4te.cache; sourceTree = "<group>"; };
+		607DA86E1F042EAF0042C9E8 /* build-aux */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "build-aux"; sourceTree = "<group>"; };
+		607DA86F1F042EAF0042C9E8 /* ChangeLog.pre-0-6-93 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "ChangeLog.pre-0-6-93"; sourceTree = "<group>"; };
+		607DA8701F042EAF0042C9E8 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		607DA8711F042EAF0042C9E8 /* config.h.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.h.in; sourceTree = "<group>"; };
+		607DA8721F042EAF0042C9E8 /* config.h.in~ */ = {isa = PBXFileReference; lastKnownFileType = text; path = "config.h.in~"; sourceTree = "<group>"; };
+		607DA8731F042EAF0042C9E8 /* config.h.meson.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.h.meson.in; sourceTree = "<group>"; };
+		607DA8741F042EAF0042C9E8 /* config.status */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = config.status; sourceTree = "<group>"; };
+		607DA8751F042EAF0042C9E8 /* configure */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = configure; sourceTree = "<group>"; };
+		607DA8761F042EAF0042C9E8 /* configure.ac */ = {isa = PBXFileReference; lastKnownFileType = text; path = configure.ac; sourceTree = "<group>"; };
+		607DA8771F042EAF0042C9E8 /* COPYING */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		607DA8781F042EAF0042C9E8 /* COPYING.GPL */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING.GPL; sourceTree = "<group>"; };
+		607DA8791F042EAF0042C9E8 /* COPYING.LGPL */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING.LGPL; sourceTree = "<group>"; };
+		607DA87A1F042EAF0042C9E8 /* docs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = docs; sourceTree = "<group>"; };
+		607DA87B1F042EAF0042C9E8 /* examples */ = {isa = PBXFileReference; lastKnownFileType = folder; path = examples; sourceTree = "<group>"; };
+		607DA87C1F042EAF0042C9E8 /* gitlog-to-changelog */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = "gitlog-to-changelog"; sourceTree = "<group>"; };
+		607DA87D1F042EAF0042C9E8 /* gtk-doc.make */ = {isa = PBXFileReference; lastKnownFileType = text; path = "gtk-doc.make"; sourceTree = "<group>"; };
+		607DA87E1F042EAF0042C9E8 /* indexer.db */ = {isa = PBXFileReference; lastKnownFileType = text; path = indexer.db; sourceTree = "<group>"; };
+		607DA87F1F042EAF0042C9E8 /* INSTALL */ = {isa = PBXFileReference; lastKnownFileType = text; path = INSTALL; sourceTree = "<group>"; };
+		607DA8801F042EAF0042C9E8 /* install_log */ = {isa = PBXFileReference; lastKnownFileType = text; path = install_log; sourceTree = "<group>"; };
+		607DA8811F042EAF0042C9E8 /* intltool-extract.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "intltool-extract.in"; sourceTree = "<group>"; };
+		607DA8821F042EAF0042C9E8 /* intltool-merge.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "intltool-merge.in"; sourceTree = "<group>"; };
+		607DA8831F042EAF0042C9E8 /* intltool-update.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = "intltool-update.in"; sourceTree = "<group>"; };
+		607DA8841F042EAF0042C9E8 /* libtool */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = libtool; sourceTree = "<group>"; };
+		607DA8851F042EAF0042C9E8 /* m4 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = m4; sourceTree = "<group>"; };
+		607DA8861F042EAF0042C9E8 /* magic.mgc */ = {isa = PBXFileReference; lastKnownFileType = file; path = magic.mgc; sourceTree = "<group>"; };
+		607DA8871F042EAF0042C9E8 /* MAINTAINERS */ = {isa = PBXFileReference; lastKnownFileType = text; path = MAINTAINERS; sourceTree = "<group>"; };
+		607DA8881F042EAF0042C9E8 /* make_log_latest */ = {isa = PBXFileReference; lastKnownFileType = text; path = make_log_latest; sourceTree = "<group>"; };
+		607DA8891F042EAF0042C9E8 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		607DA88A1F042EAF0042C9E8 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		607DA88B1F042EAF0042C9E8 /* Makefile.decl */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.decl; sourceTree = "<group>"; };
+		607DA88C1F042EAF0042C9E8 /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		607DA88D1F042EAF0042C9E8 /* meson.build */ = {isa = PBXFileReference; lastKnownFileType = text; path = meson.build; sourceTree = "<group>"; };
+		607DA88E1F042EAF0042C9E8 /* meson_options.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = meson_options.txt; sourceTree = "<group>"; };
+		607DA88F1F042EAF0042C9E8 /* NEWS */ = {isa = PBXFileReference; lastKnownFileType = text; path = NEWS; sourceTree = "<group>"; };
+		607DA8901F042EAF0042C9E8 /* po */ = {isa = PBXFileReference; lastKnownFileType = folder; path = po; sourceTree = "<group>"; };
+		607DA8911F042EAF0042C9E8 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		607DA8921F042EAF0042C9E8 /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
+		607DA8931F042EAF0042C9E8 /* stamp-h1 */ = {isa = PBXFileReference; lastKnownFileType = text; path = "stamp-h1"; sourceTree = "<group>"; };
+		607DA8941F042EAF0042C9E8 /* tap-driver.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "tap-driver.sh"; sourceTree = "<group>"; };
+		607DA8951F042EAF0042C9E8 /* tap-test */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "tap-test"; sourceTree = "<group>"; };
+		607DA8961F042EAF0042C9E8 /* tests */ = {isa = PBXFileReference; lastKnownFileType = folder; path = tests; sourceTree = "<group>"; };
+		607DA8971F042EAF0042C9E8 /* Thinair-Extract */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Thinair-Extract"; sourceTree = "<group>"; };
+		607DA8981F042EAF0042C9E8 /* Tracker.config */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tracker.config; sourceTree = "<group>"; };
+		607DA8991F042EAF0042C9E8 /* Tracker.creator */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tracker.creator; sourceTree = "<group>"; };
+		607DA89A1F042EAF0042C9E8 /* tracker.doap */ = {isa = PBXFileReference; lastKnownFileType = text; path = tracker.doap; sourceTree = "<group>"; };
+		607DA89B1F042EAF0042C9E8 /* Tracker.files */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tracker.files; sourceTree = "<group>"; };
+		607DA89C1F042EAF0042C9E8 /* Tracker.includes */ = {isa = PBXFileReference; lastKnownFileType = text; path = Tracker.includes; sourceTree = "<group>"; };
+		607DA89D1F042EAF0042C9E8 /* utils */ = {isa = PBXFileReference; lastKnownFileType = folder; path = utils; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		607DA8621F042EAF0042C9E8 = {
+			isa = PBXGroup;
+			children = (
+				607DA8681F042EAF0042C9E8 /* .DS_Store */,
+				607DA8691F042EAF0042C9E8 /* .gitignore */,
+				607DA86A1F042EAF0042C9E8 /* aclocal.m4 */,
+				607DA86B1F042EAF0042C9E8 /* AUTHORS */,
+				607DA86C1F042EAF0042C9E8 /* autogen.sh */,
+				607DA86D1F042EAF0042C9E8 /* autom4te.cache */,
+				607DA86E1F042EAF0042C9E8 /* build-aux */,
+				607DA86F1F042EAF0042C9E8 /* ChangeLog.pre-0-6-93 */,
+				607DA8701F042EAF0042C9E8 /* config.h */,
+				607DA8711F042EAF0042C9E8 /* config.h.in */,
+				607DA8721F042EAF0042C9E8 /* config.h.in~ */,
+				607DA8731F042EAF0042C9E8 /* config.h.meson.in */,
+				607DA8741F042EAF0042C9E8 /* config.status */,
+				607DA8751F042EAF0042C9E8 /* configure */,
+				607DA8761F042EAF0042C9E8 /* configure.ac */,
+				607DA8771F042EAF0042C9E8 /* COPYING */,
+				607DA8781F042EAF0042C9E8 /* COPYING.GPL */,
+				607DA8791F042EAF0042C9E8 /* COPYING.LGPL */,
+				607DA87A1F042EAF0042C9E8 /* docs */,
+				607DA87B1F042EAF0042C9E8 /* examples */,
+				607DA87C1F042EAF0042C9E8 /* gitlog-to-changelog */,
+				607DA87D1F042EAF0042C9E8 /* gtk-doc.make */,
+				607DA87E1F042EAF0042C9E8 /* indexer.db */,
+				607DA87F1F042EAF0042C9E8 /* INSTALL */,
+				607DA8801F042EAF0042C9E8 /* install_log */,
+				607DA8811F042EAF0042C9E8 /* intltool-extract.in */,
+				607DA8821F042EAF0042C9E8 /* intltool-merge.in */,
+				607DA8831F042EAF0042C9E8 /* intltool-update.in */,
+				607DA8841F042EAF0042C9E8 /* libtool */,
+				607DA8851F042EAF0042C9E8 /* m4 */,
+				607DA8861F042EAF0042C9E8 /* magic.mgc */,
+				607DA8871F042EAF0042C9E8 /* MAINTAINERS */,
+				607DA8881F042EAF0042C9E8 /* make_log_latest */,
+				607DA8891F042EAF0042C9E8 /* Makefile */,
+				607DA88A1F042EAF0042C9E8 /* Makefile.am */,
+				607DA88B1F042EAF0042C9E8 /* Makefile.decl */,
+				607DA88C1F042EAF0042C9E8 /* Makefile.in */,
+				607DA88D1F042EAF0042C9E8 /* meson.build */,
+				607DA88E1F042EAF0042C9E8 /* meson_options.txt */,
+				607DA88F1F042EAF0042C9E8 /* NEWS */,
+				607DA8901F042EAF0042C9E8 /* po */,
+				607DA8911F042EAF0042C9E8 /* README */,
+				607DA8921F042EAF0042C9E8 /* src */,
+				607DA8931F042EAF0042C9E8 /* stamp-h1 */,
+				607DA8941F042EAF0042C9E8 /* tap-driver.sh */,
+				607DA8951F042EAF0042C9E8 /* tap-test */,
+				607DA8961F042EAF0042C9E8 /* tests */,
+				607DA8971F042EAF0042C9E8 /* Thinair-Extract */,
+				607DA8981F042EAF0042C9E8 /* Tracker.config */,
+				607DA8991F042EAF0042C9E8 /* Tracker.creator */,
+				607DA89A1F042EAF0042C9E8 /* tracker.doap */,
+				607DA89B1F042EAF0042C9E8 /* Tracker.files */,
+				607DA89C1F042EAF0042C9E8 /* Tracker.includes */,
+				607DA89D1F042EAF0042C9E8 /* utils */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		607DA8671F042EAF0042C9E8 /* tracker-1.13.0 */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 607DA89E1F042EAF0042C9E8 /* Build configuration list for PBXLegacyTarget "tracker-1.13.0" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "/Users/sravanrekula/Desktop/thinair/tracker1/tracker-1.13.0";
+			dependencies = (
+			);
+			name = "tracker-1.13.0";
+			passBuildSettingsInEnvironment = 1;
+			productName = "tracker-1.13.0";
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		607DA8631F042EAF0042C9E8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = 607DA8661F042EAF0042C9E8 /* Build configuration list for PBXProject "tracker-1.13.0" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 607DA8621F042EAF0042C9E8;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				607DA8671F042EAF0042C9E8 /* tracker-1.13.0 */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		607DA8641F042EAF0042C9E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		607DA8651F042EAF0042C9E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		607DA89F1F042EAF0042C9E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "tracker-1.13.0";
+			};
+			name = Debug;
+		};
+		607DA8A01F042EAF0042C9E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "tracker-1.13.0";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		607DA8661F042EAF0042C9E8 /* Build configuration list for PBXProject "tracker-1.13.0" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607DA8641F042EAF0042C9E8 /* Debug */,
+				607DA8651F042EAF0042C9E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607DA89E1F042EAF0042C9E8 /* Build configuration list for PBXLegacyTarget "tracker-1.13.0" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607DA89F1F042EAF0042C9E8 /* Debug */,
+				607DA8A01F042EAF0042C9E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 607DA8631F042EAF0042C9E8 /* Project object */;
+}

@@ -16820,7 +16820,7 @@ static int fts5StorageGetStmt(
       }
     }
   }
-
+ 1q     `77
   *ppStmt = p->aStmt[eStmt];
   return rc;
 }

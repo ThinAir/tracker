@@ -277,9 +277,13 @@ run_standalone (TrackerConfig *config)
 	initialize_priority_and_scheduling (tracker_config_get_sched_idle (config),
 	                                    tracker_db_manager_get_first_index_done () == FALSE);
 
+    
+    //printf("pasased file name %s \n",filename);
 	file = g_file_new_for_commandline_arg (filename);
 	uri = g_file_get_uri (file);
+    //printf("pasased file uri %s \n",uri);
 
+    
 	object = tracker_extract_new (TRUE, force_module);
 
 	if (!object) {

@@ -35,15 +35,25 @@
 
 G_BEGIN_DECLS
 
+typedef void (*parsed_data_availble)(const gchar *data, void *user_data,const gchar *path);
+
 typedef struct _TrackerExtractInfo TrackerExtractInfo;
 
 GType                 tracker_extract_info_get_type               (void) G_GNUC_CONST;
 
 TrackerExtractInfo *  tracker_extract_info_new                    (GFile              *file,
                                                                    const gchar        *mimetype);
+
+TrackerExtractInfo *  tracker_extract_info_new_with_cb                    (GFile              *file,
+                                                                   const gchar        *mimetype,parsed_data_availble cb,void *context) ;
+
 TrackerExtractInfo *  tracker_extract_info_ref                    (TrackerExtractInfo *info);
 void                  tracker_extract_info_unref                  (TrackerExtractInfo *info);
 GFile *               tracker_extract_info_get_file               (TrackerExtractInfo *info);
+parsed_data_availble  tracker_extract_info_get_callback           (TrackerExtractInfo *info);
+void*                 tracker_extract_info_get_callback_context   (TrackerExtractInfo *info);
+
+
 const gchar *         tracker_extract_info_get_mimetype           (TrackerExtractInfo *info);
 
 TrackerResource *     tracker_extract_info_get_resource           (TrackerExtractInfo *info);

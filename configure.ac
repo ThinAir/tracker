@@ -218,6 +218,8 @@ POPPLER_REQUIRED=0.16.0
 CAIRO_REQUIRED=1.0
 LIBICU_REQUIRED=4.8.1.1
 LIBJPEG_REQUIRED="any version"
+LIBMAGIC_REQUIRED="any version"
+
 LIBGIF_REQUIRED="any version"
 LIBTIFF_REQUIRED="any version"
 LIBVORBIS_REQUIRED=0.22
@@ -590,7 +592,7 @@ AC_SUBST(GCOV_LIBS)
 ####################################################################
 BUILD_VALAFLAGS="-g --target-glib=${GLIB_REQUIRED}"
 BUILD_VALACFLAGS="${WARN_VALACFLAGS} ${GCOV_CFLAGS} -DG_LOG_DOMAIN=\\\"Tracker\\\" -DTRACKER_COMPILATION"
-BUILD_CFLAGS="${WARN_CFLAGS} ${GCOV_CFLAGS} -DG_LOG_DOMAIN=\\\"Tracker\\\" -DTRACKER_COMPILATION"
+BUILD_CFLAGS="${WARN_CFLAGS} ${GCOV_CFLAGS} -DG_LOG_DOMAIN=\\\"Tracker\\\" -DTRACKER_COMPILATION -g -O0"
 BUILD_LIBS="${GCOV_LIBS}"
 
 AC_SUBST(BUILD_VALAFLAGS)
@@ -2183,6 +2185,43 @@ if test "x$enable_libjpeg" = "xyes"; then
 fi
 
 AM_CONDITIONAL(HAVE_LIBJPEG, test "x$have_libjpeg" = "xyes")
+
+
+
+AC_ARG_ENABLE(libmagic,
+              AS_HELP_STRING([--enable-libmagic],
+                             [enable extractor for magic metadata [[default=auto]]]),
+              [enable_libmagic=$enableval],
+              [enable_libmagic=auto])
+
+if test "x$enable_libmagic" != "xno" ; then
+   AC_CHECK_HEADER(magic.h,
+   AC_CHECK_LIB(magic,magic_open))
+
+   have_libmagic=${ac_cv_lib_magic_magic_open:-no}
+
+   LIBMAGIC_CFLAGS="$CFLAGS"
+   LIBMAGIC_LIBS="$LIBS"
+
+   AC_SUBST(LIBMAGIC_CFLAGS)
+   AC_SUBST(LIBMAGIC_LIBS)
+
+   if test "x$have_libmagic" = "xyes"; then
+      AC_DEFINE(HAVE_LIBMAGIC, [], [Define if we have libmagic])
+   fi
+else
+   have_libmagic="no  (disabled)"
+fi
+
+if test "x$enable_libmagic" = "xyes"; then
+   if test "x$have_libmagic" != "xyes"; then
+      AC_MSG_ERROR([Could not find libmagic >= $LIBMAGIC_REQUIRED.])
+   fi
+fi
+
+AM_CONDITIONAL(HAVE_LIBMAGIC, test "x$have_libmagic" = "xyes")
+
+
 
 CFLAGS="$OLD_CFLAGS"
 LDFLAGS="$OLD_LDFLAGS"

@@ -49,6 +49,10 @@ struct _TrackerExtractInfo
 #endif
 
 	gint ref_count;
+    
+    parsed_data_availble cb;
+    
+    void *context;
 };
 
 G_DEFINE_BOXED_TYPE (TrackerExtractInfo, tracker_extract_info,
@@ -67,26 +71,34 @@ G_DEFINE_BOXED_TYPE (TrackerExtractInfo, tracker_extract_info,
  * Since: 0.12
  **/
 TrackerExtractInfo *
-tracker_extract_info_new (GFile       *file,
-                          const gchar *mimetype)
+tracker_extract_info_new (GFile              *file,
+                          const gchar        *mimetype)
 {
-	TrackerExtractInfo *info;
+    return tracker_extract_info_new_with_cb(file,mimetype,NULL,NULL);
+}
 
-	g_return_val_if_fail (G_IS_FILE (file), NULL);
-
-	info = g_slice_new0 (TrackerExtractInfo);
-	info->file = g_object_ref (file);
-	info->mimetype = g_strdup (mimetype);
-
-	info->resource = NULL;
-
+TrackerExtractInfo *  tracker_extract_info_new_with_cb                    (GFile              *file,
+                                                                           const gchar        *mimetype,parsed_data_availble cb,void *context){
+    TrackerExtractInfo *info;
+    
+    g_return_val_if_fail (G_IS_FILE (file), NULL);
+    
+    info = g_slice_new0 (TrackerExtractInfo);
+    info->file = g_object_ref (file);
+    info->mimetype = g_strdup (mimetype);
+    
+    info->resource = NULL;
+    
 #ifdef HAVE_LIBMEDIAART
-        info->media_art_process = NULL;
+    info->media_art_process = NULL;
 #endif
+    
+    info->cb = cb;
+    info->ref_count = 1;
+    info->context = context;
+    
+    return info;
 
-	info->ref_count = 1;
-
-	return info;
 }
 
 /**
@@ -156,6 +168,16 @@ tracker_extract_info_get_file (TrackerExtractInfo *info)
 	g_return_val_if_fail (info != NULL, NULL);
 
 	return info->file;
+}
+
+
+parsed_data_availble  tracker_extract_info_get_callback (TrackerExtractInfo *info){
+    return info->cb;
+}
+
+void* tracker_extract_info_get_callback_context   (TrackerExtractInfo *info){
+    
+    return info->context;
 }
 
 /**

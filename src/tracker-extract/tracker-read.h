@@ -31,6 +31,11 @@ gchar *tracker_read_text_from_stream (GInputStream *stream,
 gchar *tracker_read_text_from_fd (gint  fd,
                                   gsize max_bytes);
 
+gchar *tracker_read_text_chunk_from_fd_ (gint  fd,
+                                  gsize max_bytes,FILE **fz,gsize *bytes_remaining);
+
+
+
 G_END_DECLS
 
 #endif /* __TRACKER_READ_H__ */

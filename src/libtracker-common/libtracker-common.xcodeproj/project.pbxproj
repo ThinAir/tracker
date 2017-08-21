@@ -1,0 +1,284 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		607DA8AB1F0431D60042C9E8 /* .deps */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .deps; sourceTree = "<group>"; };
+		607DA8AC1F0431D60042C9E8 /* .DS_Store */ = {isa = PBXFileReference; lastKnownFileType = file; path = .DS_Store; sourceTree = "<group>"; };
+		607DA8AD1F0431D60042C9E8 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		607DA8AE1F0431D60042C9E8 /* .libs */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .libs; sourceTree = "<group>"; };
+		607DA8AF1F0431D60042C9E8 /* COPYING.LIB */ = {isa = PBXFileReference; lastKnownFileType = text; path = COPYING.LIB; sourceTree = "<group>"; };
+		607DA8B01F0431D60042C9E8 /* generate-tracker-parser-sha1-header.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "generate-tracker-parser-sha1-header.sh"; sourceTree = "<group>"; };
+		607DA8B11F0431D60042C9E8 /* libtracker-common.la */ = {isa = PBXFileReference; lastKnownFileType = text; path = "libtracker-common.la"; sourceTree = "<group>"; };
+		607DA8B21F0431D60042C9E8 /* libtracker-common.vapi */ = {isa = PBXFileReference; lastKnownFileType = text; path = "libtracker-common.vapi"; sourceTree = "<group>"; };
+		607DA8B31F0431D60042C9E8 /* Makefile */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		607DA8B41F0431D60042C9E8 /* Makefile.am */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		607DA8B51F0431D60042C9E8 /* Makefile.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = Makefile.in; sourceTree = "<group>"; };
+		607DA8B61F0431D60042C9E8 /* meson.build */ = {isa = PBXFileReference; lastKnownFileType = text; path = meson.build; sourceTree = "<group>"; };
+		607DA8B71F0431D60042C9E8 /* stop-words */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "stop-words"; sourceTree = "<group>"; };
+		607DA8B81F0431D60042C9E8 /* tracker-common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-common.h"; sourceTree = "<group>"; };
+		607DA8B91F0431D60042C9E8 /* tracker-date-time.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-date-time.c"; sourceTree = "<group>"; };
+		607DA8BA1F0431D60042C9E8 /* tracker-date-time.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-date-time.h"; sourceTree = "<group>"; };
+		607DA8BB1F0431D60042C9E8 /* tracker-date-time.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-date-time.lo"; sourceTree = "<group>"; };
+		607DA8BC1F0431D60042C9E8 /* tracker-date-time.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-date-time.o"; sourceTree = "<group>"; };
+		607DA8BD1F0431D60042C9E8 /* tracker-dbus.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-dbus.c"; sourceTree = "<group>"; };
+		607DA8BE1F0431D60042C9E8 /* tracker-dbus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-dbus.h"; sourceTree = "<group>"; };
+		607DA8BF1F0431D60042C9E8 /* tracker-dbus.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-dbus.lo"; sourceTree = "<group>"; };
+		607DA8C01F0431D60042C9E8 /* tracker-dbus.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-dbus.o"; sourceTree = "<group>"; };
+		607DA8C11F0431D60042C9E8 /* tracker-enum-types.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-enum-types.c"; sourceTree = "<group>"; };
+		607DA8C21F0431D60042C9E8 /* tracker-enum-types.c.template */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-enum-types.c.template"; sourceTree = "<group>"; };
+		607DA8C31F0431D60042C9E8 /* tracker-enum-types.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-enum-types.h"; sourceTree = "<group>"; };
+		607DA8C41F0431D60042C9E8 /* tracker-enum-types.h.template */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-enum-types.h.template"; sourceTree = "<group>"; };
+		607DA8C51F0431D60042C9E8 /* tracker-enum-types.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-enum-types.lo"; sourceTree = "<group>"; };
+		607DA8C61F0431D60042C9E8 /* tracker-enum-types.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-enum-types.o"; sourceTree = "<group>"; };
+		607DA8C71F0431D60042C9E8 /* tracker-enums.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-enums.h"; sourceTree = "<group>"; };
+		607DA8C81F0431D60042C9E8 /* tracker-file-utils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-file-utils.c"; sourceTree = "<group>"; };
+		607DA8C91F0431D60042C9E8 /* tracker-file-utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-file-utils.h"; sourceTree = "<group>"; };
+		607DA8CA1F0431D60042C9E8 /* tracker-file-utils.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-file-utils.lo"; sourceTree = "<group>"; };
+		607DA8CB1F0431D60042C9E8 /* tracker-file-utils.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-file-utils.o"; sourceTree = "<group>"; };
+		607DA8CC1F0431D60042C9E8 /* tracker-ioprio.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-ioprio.c"; sourceTree = "<group>"; };
+		607DA8CD1F0431D60042C9E8 /* tracker-ioprio.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-ioprio.h"; sourceTree = "<group>"; };
+		607DA8CE1F0431D60042C9E8 /* tracker-ioprio.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-ioprio.lo"; sourceTree = "<group>"; };
+		607DA8CF1F0431D60042C9E8 /* tracker-ioprio.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-ioprio.o"; sourceTree = "<group>"; };
+		607DA8D01F0431D60042C9E8 /* tracker-language.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-language.c"; sourceTree = "<group>"; };
+		607DA8D11F0431D60042C9E8 /* tracker-language.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-language.h"; sourceTree = "<group>"; };
+		607DA8D21F0431D60042C9E8 /* tracker-language.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-language.lo"; sourceTree = "<group>"; };
+		607DA8D31F0431D60042C9E8 /* tracker-language.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-language.o"; sourceTree = "<group>"; };
+		607DA8D41F0431D60042C9E8 /* tracker-locale.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-locale.c"; sourceTree = "<group>"; };
+		607DA8D51F0431D60042C9E8 /* tracker-locale.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-locale.h"; sourceTree = "<group>"; };
+		607DA8D61F0431D60042C9E8 /* tracker-locale.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-locale.lo"; sourceTree = "<group>"; };
+		607DA8D71F0431D60042C9E8 /* tracker-locale.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-locale.o"; sourceTree = "<group>"; };
+		607DA8D81F0431D60042C9E8 /* tracker-log.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-log.c"; sourceTree = "<group>"; };
+		607DA8D91F0431D60042C9E8 /* tracker-log.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-log.h"; sourceTree = "<group>"; };
+		607DA8DA1F0431D60042C9E8 /* tracker-log.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-log.lo"; sourceTree = "<group>"; };
+		607DA8DB1F0431D60042C9E8 /* tracker-log.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-log.o"; sourceTree = "<group>"; };
+		607DA8DC1F0431D60042C9E8 /* tracker-parser-libicu.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-parser-libicu.c"; sourceTree = "<group>"; };
+		607DA8DD1F0431D60042C9E8 /* tracker-parser-libunistring.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-parser-libunistring.c"; sourceTree = "<group>"; };
+		607DA8DE1F0431D60042C9E8 /* tracker-parser-libunistring.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-parser-libunistring.lo"; sourceTree = "<group>"; };
+		607DA8DF1F0431D60042C9E8 /* tracker-parser-libunistring.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-parser-libunistring.o"; sourceTree = "<group>"; };
+		607DA8E01F0431D60042C9E8 /* tracker-parser-sha1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-parser-sha1.h"; sourceTree = "<group>"; };
+		607DA8E11F0431D60042C9E8 /* tracker-parser-utils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-parser-utils.c"; sourceTree = "<group>"; };
+		607DA8E21F0431D60042C9E8 /* tracker-parser-utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-parser-utils.h"; sourceTree = "<group>"; };
+		607DA8E31F0431D60042C9E8 /* tracker-parser-utils.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-parser-utils.lo"; sourceTree = "<group>"; };
+		607DA8E41F0431D60042C9E8 /* tracker-parser-utils.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-parser-utils.o"; sourceTree = "<group>"; };
+		607DA8E51F0431D60042C9E8 /* tracker-parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-parser.h"; sourceTree = "<group>"; };
+		607DA8E61F0431D60042C9E8 /* tracker-sched.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-sched.c"; sourceTree = "<group>"; };
+		607DA8E71F0431D60042C9E8 /* tracker-sched.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-sched.h"; sourceTree = "<group>"; };
+		607DA8E81F0431D60042C9E8 /* tracker-sched.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-sched.lo"; sourceTree = "<group>"; };
+		607DA8E91F0431D60042C9E8 /* tracker-sched.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-sched.o"; sourceTree = "<group>"; };
+		607DA8EA1F0431D60042C9E8 /* tracker-seccomp.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-seccomp.c"; sourceTree = "<group>"; };
+		607DA8EB1F0431D60042C9E8 /* tracker-seccomp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-seccomp.h"; sourceTree = "<group>"; };
+		607DA8EC1F0431D60042C9E8 /* tracker-seccomp.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-seccomp.lo"; sourceTree = "<group>"; };
+		607DA8ED1F0431D60042C9E8 /* tracker-seccomp.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-seccomp.o"; sourceTree = "<group>"; };
+		607DA8EE1F0431D60042C9E8 /* tracker-type-utils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-type-utils.c"; sourceTree = "<group>"; };
+		607DA8EF1F0431D60042C9E8 /* tracker-type-utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-type-utils.h"; sourceTree = "<group>"; };
+		607DA8F01F0431D60042C9E8 /* tracker-type-utils.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-type-utils.lo"; sourceTree = "<group>"; };
+		607DA8F11F0431D60042C9E8 /* tracker-type-utils.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-type-utils.o"; sourceTree = "<group>"; };
+		607DA8F21F0431D60042C9E8 /* tracker-utils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "tracker-utils.c"; sourceTree = "<group>"; };
+		607DA8F31F0431D60042C9E8 /* tracker-utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "tracker-utils.h"; sourceTree = "<group>"; };
+		607DA8F41F0431D60042C9E8 /* tracker-utils.lo */ = {isa = PBXFileReference; lastKnownFileType = text; path = "tracker-utils.lo"; sourceTree = "<group>"; };
+		607DA8F51F0431D60042C9E8 /* tracker-utils.o */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.objfile"; path = "tracker-utils.o"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		607DA8A51F0431D60042C9E8 = {
+			isa = PBXGroup;
+			children = (
+				607DA8AB1F0431D60042C9E8 /* .deps */,
+				607DA8AC1F0431D60042C9E8 /* .DS_Store */,
+				607DA8AD1F0431D60042C9E8 /* .gitignore */,
+				607DA8AE1F0431D60042C9E8 /* .libs */,
+				607DA8AF1F0431D60042C9E8 /* COPYING.LIB */,
+				607DA8B01F0431D60042C9E8 /* generate-tracker-parser-sha1-header.sh */,
+				607DA8B11F0431D60042C9E8 /* libtracker-common.la */,
+				607DA8B21F0431D60042C9E8 /* libtracker-common.vapi */,
+				607DA8B31F0431D60042C9E8 /* Makefile */,
+				607DA8B41F0431D60042C9E8 /* Makefile.am */,
+				607DA8B51F0431D60042C9E8 /* Makefile.in */,
+				607DA8B61F0431D60042C9E8 /* meson.build */,
+				607DA8B71F0431D60042C9E8 /* stop-words */,
+				607DA8B81F0431D60042C9E8 /* tracker-common.h */,
+				607DA8B91F0431D60042C9E8 /* tracker-date-time.c */,
+				607DA8BA1F0431D60042C9E8 /* tracker-date-time.h */,
+				607DA8BB1F0431D60042C9E8 /* tracker-date-time.lo */,
+				607DA8BC1F0431D60042C9E8 /* tracker-date-time.o */,
+				607DA8BD1F0431D60042C9E8 /* tracker-dbus.c */,
+				607DA8BE1F0431D60042C9E8 /* tracker-dbus.h */,
+				607DA8BF1F0431D60042C9E8 /* tracker-dbus.lo */,
+				607DA8C01F0431D60042C9E8 /* tracker-dbus.o */,
+				607DA8C11F0431D60042C9E8 /* tracker-enum-types.c */,
+				607DA8C21F0431D60042C9E8 /* tracker-enum-types.c.template */,
+				607DA8C31F0431D60042C9E8 /* tracker-enum-types.h */,
+				607DA8C41F0431D60042C9E8 /* tracker-enum-types.h.template */,
+				607DA8C51F0431D60042C9E8 /* tracker-enum-types.lo */,
+				607DA8C61F0431D60042C9E8 /* tracker-enum-types.o */,
+				607DA8C71F0431D60042C9E8 /* tracker-enums.h */,
+				607DA8C81F0431D60042C9E8 /* tracker-file-utils.c */,
+				607DA8C91F0431D60042C9E8 /* tracker-file-utils.h */,
+				607DA8CA1F0431D60042C9E8 /* tracker-file-utils.lo */,
+				607DA8CB1F0431D60042C9E8 /* tracker-file-utils.o */,
+				607DA8CC1F0431D60042C9E8 /* tracker-ioprio.c */,
+				607DA8CD1F0431D60042C9E8 /* tracker-ioprio.h */,
+				607DA8CE1F0431D60042C9E8 /* tracker-ioprio.lo */,
+				607DA8CF1F0431D60042C9E8 /* tracker-ioprio.o */,
+				607DA8D01F0431D60042C9E8 /* tracker-language.c */,
+				607DA8D11F0431D60042C9E8 /* tracker-language.h */,
+				607DA8D21F0431D60042C9E8 /* tracker-language.lo */,
+				607DA8D31F0431D60042C9E8 /* tracker-language.o */,
+				607DA8D41F0431D60042C9E8 /* tracker-locale.c */,
+				607DA8D51F0431D60042C9E8 /* tracker-locale.h */,
+				607DA8D61F0431D60042C9E8 /* tracker-locale.lo */,
+				607DA8D71F0431D60042C9E8 /* tracker-locale.o */,
+				607DA8D81F0431D60042C9E8 /* tracker-log.c */,
+				607DA8D91F0431D60042C9E8 /* tracker-log.h */,
+				607DA8DA1F0431D60042C9E8 /* tracker-log.lo */,
+				607DA8DB1F0431D60042C9E8 /* tracker-log.o */,
+				607DA8DC1F0431D60042C9E8 /* tracker-parser-libicu.c */,
+				607DA8DD1F0431D60042C9E8 /* tracker-parser-libunistring.c */,
+				607DA8DE1F0431D60042C9E8 /* tracker-parser-libunistring.lo */,
+				607DA8DF1F0431D60042C9E8 /* tracker-parser-libunistring.o */,
+				607DA8E01F0431D60042C9E8 /* tracker-parser-sha1.h */,
+				607DA8E11F0431D60042C9E8 /* tracker-parser-utils.c */,
+				607DA8E21F0431D60042C9E8 /* tracker-parser-utils.h */,
+				607DA8E31F0431D60042C9E8 /* tracker-parser-utils.lo */,
+				607DA8E41F0431D60042C9E8 /* tracker-parser-utils.o */,
+				607DA8E51F0431D60042C9E8 /* tracker-parser.h */,
+				607DA8E61F0431D60042C9E8 /* tracker-sched.c */,
+				607DA8E71F0431D60042C9E8 /* tracker-sched.h */,
+				607DA8E81F0431D60042C9E8 /* tracker-sched.lo */,
+				607DA8E91F0431D60042C9E8 /* tracker-sched.o */,
+				607DA8EA1F0431D60042C9E8 /* tracker-seccomp.c */,
+				607DA8EB1F0431D60042C9E8 /* tracker-seccomp.h */,
+				607DA8EC1F0431D60042C9E8 /* tracker-seccomp.lo */,
+				607DA8ED1F0431D60042C9E8 /* tracker-seccomp.o */,
+				607DA8EE1F0431D60042C9E8 /* tracker-type-utils.c */,
+				607DA8EF1F0431D60042C9E8 /* tracker-type-utils.h */,
+				607DA8F01F0431D60042C9E8 /* tracker-type-utils.lo */,
+				607DA8F11F0431D60042C9E8 /* tracker-type-utils.o */,
+				607DA8F21F0431D60042C9E8 /* tracker-utils.c */,
+				607DA8F31F0431D60042C9E8 /* tracker-utils.h */,
+				607DA8F41F0431D60042C9E8 /* tracker-utils.lo */,
+				607DA8F51F0431D60042C9E8 /* tracker-utils.o */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXLegacyTarget section */
+		607DA8AA1F0431D60042C9E8 /* libtracker-common */ = {
+			isa = PBXLegacyTarget;
+			buildArgumentsString = "$(ACTION)";
+			buildConfigurationList = 607DA8F61F0431D60042C9E8 /* Build configuration list for PBXLegacyTarget "libtracker-common" */;
+			buildPhases = (
+			);
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = "/Users/sravanrekula/Desktop/thinair/tracker1/tracker-1.13.0/src/libtracker-common";
+			dependencies = (
+			);
+			name = "libtracker-common";
+			passBuildSettingsInEnvironment = 1;
+			productName = "libtracker-common";
+		};
+/* End PBXLegacyTarget section */
+
+/* Begin PBXProject section */
+		607DA8A61F0431D60042C9E8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = 607DA8A91F0431D60042C9E8 /* Build configuration list for PBXProject "libtracker-common" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 607DA8A51F0431D60042C9E8;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				607DA8AA1F0431D60042C9E8 /* libtracker-common */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		607DA8A71F0431D60042C9E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		607DA8A81F0431D60042C9E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+		607DA8F71F0431D60042C9E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUGGING_SYMBOLS = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "libtracker-common";
+			};
+			name = Debug;
+		};
+		607DA8F81F0431D60042C9E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "libtracker-common";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		607DA8A91F0431D60042C9E8 /* Build configuration list for PBXProject "libtracker-common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607DA8A71F0431D60042C9E8 /* Debug */,
+				607DA8A81F0431D60042C9E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		607DA8F61F0431D60042C9E8 /* Build configuration list for PBXLegacyTarget "libtracker-common" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				607DA8F71F0431D60042C9E8 /* Debug */,
+				607DA8F81F0431D60042C9E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 607DA8A61F0431D60042C9E8 /* Project object */;
+}

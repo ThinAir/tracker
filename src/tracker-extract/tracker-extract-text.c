@@ -39,9 +39,41 @@
 #include "tracker-main.h"
 #include "tracker-read.h"
 
+//dummy timed wait
+
+
+void
+pop_data_timed (double seconds)
+{
+    GMutex data_mutex;
+    GCond data_cond;
+    
+    g_mutex_init(&data_mutex);
+    g_cond_init(&data_cond);
+    gint64 end_time;
+    gpointer data = NULL;
+    
+    g_mutex_lock (&data_mutex);
+    
+    end_time = g_get_monotonic_time () + seconds * G_TIME_SPAN_SECOND;
+    if (!g_cond_wait_until (&data_cond, &data_mutex, end_time))
+    {
+        // timeout has passed.
+        g_mutex_unlock (&data_mutex);
+        goto done;
+    }
+    
+done:
+    g_cond_clear(&data_cond);
+    g_mutex_unlock (&data_mutex);
+    g_mutex_clear(&data_mutex);
+}
+
+
+
 static gchar *
 get_file_content (GFile *file,
-                  gsize  n_bytes)
+                  gsize  n_bytes,TrackerExtractInfo *info)
 {
 	gchar *text, *uri, *path;
 	int fd;
@@ -73,7 +105,27 @@ get_file_content (GFile *file,
 	/* Read up to n_bytes from stream. Output is always, always valid UTF-8,
 	 * this function closes the FD.
 	 */
-	text = tracker_read_text_from_fd (fd, n_bytes);
+    
+    parsed_data_availble cb = tracker_extract_info_get_callback(info);
+    if (cb) {
+        FILE *file = NULL;
+        gsize bytes_remaining=n_bytes;
+        do{
+            text = tracker_read_text_chunk_from_fd_(fd,n_bytes,&file,&bytes_remaining);
+            if (text) {
+                cb(text,tracker_extract_info_get_callback_context(info),path);
+            }
+            g_free(text);
+            if (text==NULL) {
+                break;
+            }
+            pop_data_timed(0.2);
+        }while (bytes_remaining>0);
+    }
+    else{
+        text = tracker_read_text_from_fd (fd, n_bytes);
+
+    }
 	g_free (uri);
 	g_free (path);
 
@@ -90,7 +142,7 @@ tracker_extract_get_metadata (TrackerExtractInfo *info)
 	config = tracker_main_get_config ();
 
 	content = get_file_content (tracker_extract_info_get_file (info),
-	                            tracker_config_get_max_bytes (config));
+	                            tracker_config_get_max_bytes (config),info);
 
 	metadata = tracker_resource_new (NULL);
 	tracker_resource_add_uri (metadata, "rdf:type", "nfo:PlainTextDocument");

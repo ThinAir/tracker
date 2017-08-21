@@ -256,6 +256,8 @@ tracker_config_new (void)
 
 		backend = g_keyfile_settings_backend_new (filename, CONFIG_PATH, "General");
 		g_info ("Using config file '%s'", filename);
+        //printf ("Using config file '%s'", filename);
+
 		g_free (filename);
 
 		config = g_object_new (TRACKER_TYPE_CONFIG,
@@ -266,15 +268,20 @@ tracker_config_new (void)
 		g_object_unref (backend);
 
 		if (need_to_save) {
+            printf("saving config with unlike %s",CONFIG_PATH);
+
 			g_info ("  Config file does not exist, using default values...");
 		}
 	} else {
+        printf("creating config with like %s\n",CONFIG_PATH);
+
 		config = g_object_new (TRACKER_TYPE_CONFIG,
 		                       "schema-id", CONFIG_SCHEMA,
 		                       "path", CONFIG_PATH,
 		                       NULL);
 	}
-
+    
+    printf("returning config");
 	return config;
 }
 
@@ -306,9 +313,9 @@ tracker_config_get_sched_idle (TrackerConfig *config)
 gint
 tracker_config_get_max_bytes (TrackerConfig *config)
 {
-	g_return_val_if_fail (TRACKER_IS_CONFIG (config), 0);
+	//g_return_val_if_fail (TRACKER_IS_CONFIG (config), 0);
 
-	return config->max_bytes;
+    return 104857600 ; //config->max_bytes;
 }
 
 gint

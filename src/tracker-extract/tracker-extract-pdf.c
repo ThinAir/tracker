@@ -51,6 +51,9 @@
 /* Time in seconds before we stop processing content */
 #define EXTRACTION_PROCESS_TIMEOUT 10
 
+void
+pop_data_timed (double seconds);
+
 typedef struct {
 	gchar *title;
 	gchar *subject;
@@ -194,7 +197,8 @@ read_outline (PopplerDocument *document,
 
 static gchar *
 extract_content_text (PopplerDocument *document,
-                      gsize            n_bytes)
+                      gsize            n_bytes,
+                      TrackerExtractInfo *info)
 {
 	GString *string;
 	GTimer *timer;
@@ -207,7 +211,7 @@ extract_content_text (PopplerDocument *document,
 	timer = g_timer_new ();
 
 	for (i = 0, remaining_bytes = n_bytes, elapsed = g_timer_elapsed (timer, NULL);
-	     i < n_pages && remaining_bytes > 0 && elapsed < EXTRACTION_PROCESS_TIMEOUT;
+	     i < n_pages && remaining_bytes > 0 /*&& elapsed < EXTRACTION_PROCESS_TIMEOUT*/;
 	     i++, elapsed = g_timer_elapsed (timer, NULL)) {
 		PopplerPage *page;
 		gsize written_bytes = 0;
@@ -227,6 +231,7 @@ extract_content_text (PopplerDocument *document,
 		                                &written_bytes)) {
 			g_string_append_c (string, ' ');
 		}
+        
 
 		remaining_bytes -= written_bytes;
 
@@ -236,7 +241,21 @@ extract_content_text (PopplerDocument *document,
 
 		g_free (text);
 		g_object_unref (page);
-	}
+        //callback
+//        if (string && string->len > 100*1024) {
+            parsed_data_availble cb = tracker_extract_info_get_callback(info);
+            if (cb) {
+                GFile *file = tracker_extract_info_get_file (info);
+                gchar *path = g_file_get_path (file);
+                gchar *data = g_string_free (string, FALSE);;
+                cb(data,tracker_extract_info_get_callback_context(info),path);
+                g_free(data);
+                g_free(path);
+                string = g_string_new ("");
+                //pop_data_timed (0.1);
+            }
+        }
+//	}
 
 	if (elapsed >= EXTRACTION_PROCESS_TIMEOUT) {
 		g_debug ("Extraction timed out, %d seconds reached", EXTRACTION_PROCESS_TIMEOUT);
@@ -589,7 +608,7 @@ tracker_extract_get_metadata (TrackerExtractInfo *info)
 
 	config = tracker_main_get_config ();
 	n_bytes = tracker_config_get_max_bytes (config);
-	content = extract_content_text (document, n_bytes);
+	content = extract_content_text (document, n_bytes, info);
 
 	if (content) {
 		tracker_resource_set_string (metadata, "nie:plainTextContent", content);
@@ -619,4 +638,33 @@ tracker_extract_get_metadata (TrackerExtractInfo *info)
 	g_object_unref (metadata);
 
 	return TRUE;
+}
+
+
+//dummy timed wait
+void
+pop_data_timed (double seconds)
+{
+    GMutex data_mutex;
+    GCond data_cond;
+    
+    g_mutex_init(&data_mutex);
+    g_cond_init(&data_cond);
+    gint64 end_time;
+    gpointer data = NULL;
+    
+    g_mutex_lock (&data_mutex);
+    
+    end_time = g_get_monotonic_time () + seconds * G_TIME_SPAN_SECOND;
+    if (!g_cond_wait_until (&data_cond, &data_mutex, end_time))
+    {
+        // timeout has passed.
+        g_mutex_unlock (&data_mutex);
+        goto done;
+    }
+    
+done:
+    g_cond_clear(&data_cond);
+    g_mutex_unlock (&data_mutex);
+    g_mutex_clear(&data_mutex);
 }

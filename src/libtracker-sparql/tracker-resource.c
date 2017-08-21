@@ -1511,3 +1511,7 @@ tracker_resource_print_sparql_update (TrackerResource         *resource,
 
 	return g_string_free (context.string, FALSE);
 }
+
+char *get_content(TrackerResource *self){
+    return "";
+}

@@ -34,7 +34,7 @@
 /* Size of the buffer to use */
 #define XML_BUFFER_SIZE            8192         /* bytes */
 /* Note: 20 MBytes of max size is really assumed to be a safe limit. */
-#define XML_MAX_BYTES_READ         (20u << 20)  /* bytes */
+#define XML_MAX_BYTES_READ         (100u << 20)  /* bytes */
 
 /**
  * based on find_member() from vsd_utils.c:

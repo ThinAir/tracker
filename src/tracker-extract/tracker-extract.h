@@ -65,6 +65,16 @@ void            tracker_extract_file                    (TrackerExtract         
                                                          GCancellable           *cancellable,
                                                          GAsyncReadyCallback     cb,
                                                          gpointer                user_data);
+void            tracker_extract_file_with_cb             (TrackerExtract         *extract,
+                                                         const gchar            *file,
+                                                         const gchar            *mimetype,
+                                                         GCancellable           *cancellable,
+                                                         GAsyncReadyCallback     cb,
+                                                         parsed_data_availble    parsed_data_availble_cb,
+                                                         void*                   context,
+                                                         gpointer                user_data);
+
+
 TrackerExtractInfo *
                 tracker_extract_file_finish             (TrackerExtract         *extract,
                                                          GAsyncResult           *res,

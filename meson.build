@@ -68,6 +68,8 @@ zlib = dependency('zlib')
 
 libgif = cc.find_library('libgif', required: false)
 libjpeg = cc.find_library('libjpeg', required: false)
+libmagic = cc.find_library('libmagic', required: true)
+
 libmath = cc.find_library('m')
 
 # FIXME: here we work around a quirk todo with Meson and Vala: the 'uuid'
@@ -583,6 +585,7 @@ if have_tracker_extract
         libtiff.found().to_string(), exempi.found().to_string(), libexif.found().to_string(), libiptcdata.found().to_string()),
     '    Support Vorbis (ogg/etc):               ' + libvorbis.found().to_string(),
     '    Support Flac:                           ' + flac.found().to_string(),
+    '    Support magic:                          ' + libmagic.found().to_string(),
     '    Support MS & Open Office:               ' + libgsf.found().to_string(),
     '    Support XML / HTML:                     ' + libxml2.found().to_string(),
     '    Support embedded / sidecar XMP:         ' + exempi.found().to_string(),

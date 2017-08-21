@@ -1,0 +1,238 @@
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-recursive
+Making all in src
+Making all in ontologies
+make[3]: Nothing to be done for `all'.
+Making all in gvdb
+  CC       gvdb-builder.lo
+  CC       gvdb-reader.lo
+  CCLD     libgvdb.la
+Making all in libtracker-common
+  GEN      tracker-enum-types.c
+  GEN      tracker-enum-types.h
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-recursive
+Making all in stop-words
+make[5]: Nothing to be done for `all'.
+  CC       tracker-enum-types.lo
+  CC       tracker-date-time.lo
+  CC       tracker-dbus.lo
+  CC       tracker-file-utils.lo
+  CC       tracker-ioprio.lo
+  CC       tracker-log.lo
+  CC       tracker-sched.lo
+  CC       tracker-seccomp.lo
+  CC       tracker-type-utils.lo
+  CC       tracker-utils.lo
+  CC       tracker-locale.lo
+  CC       tracker-parser-utils.lo
+  CC       tracker-language.lo
+  CC       tracker-parser-libunistring.lo
+  CCLD     libtracker-common.la
+Making all in libtracker-sparql
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-am
+  GEN      tracker-sparql-enum-types.h
+  GEN      tracker-sparql-enum-types.c
+  CC       tracker-sparql-enum-types.lo
+  CC       tracker-namespace.lo
+  CC       tracker-builder.lo
+  CC       tracker-connection.lo
+  CC       tracker-cursor.lo
+  CC       tracker-namespace-manager.lo
+  CC       tracker-notifier.lo
+  CC       tracker-resource.lo
+  CC       tracker-utils.lo
+  CC       tracker-uri.lo
+  CC       tracker-version.lo
+  CCLD     libtracker-sparql.la
+cp tracker-sparql.pc tracker-sparql-1.0.pc
+  GEN      tracker-sparql-1.0.vapi
+Making all in libtracker-fts
+  CC       tracker-fts.lo
+  CC       tracker-fts-config.lo
+  CC       tracker-fts-tokenizer.lo
+  CCLD     libtracker-fts.la
+  GEN      org.freedesktop.Tracker.enums.xml
+  ITMRG  org.freedesktop.Tracker.FTS.gschema.xml
+  GEN      org.freedesktop.Tracker.FTS.gschema.valid
+Making all in libtracker-bus
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-am
+  CC       tracker-namespace.lo
+  CC       tracker-bus.lo
+  CC       tracker-array-cursor.lo
+  CC       tracker-bus-fd-cursor.lo
+  CCLD     libtracker-bus.la
+Making all in libtracker-data
+  VALAC    libtracker_data_la_vala.stamp
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-am
+  CC       tracker-vala-namespace.lo
+  CC       tracker-sparql-expression.lo
+  CC       tracker-sparql-pattern.lo
+  CC       tracker-sparql-query.lo
+  CC       tracker-sparql-scanner.lo
+  CC       tracker-turtle-reader.lo
+  CC       tracker-class.lo
+  CC       tracker-collation.lo
+  CC       tracker-crc32.lo
+  CC       tracker-data-backup.lo
+  CC       tracker-data-manager.lo
+  CC       tracker-data-query.lo
+  CC       tracker-data-update.lo
+  CC       tracker-db-config.lo
+  CC       tracker-db-interface.lo
+  CC       tracker-db-interface-sqlite.lo
+  CC       tracker-db-manager.lo
+  CC       tracker-db-journal.lo
+  CC       tracker-db-backup.lo
+  CC       tracker-namespace.lo
+  CC       tracker-ontology.lo
+  CC       tracker-ontologies.lo
+  CC       tracker-property.lo
+  CCLD     libtracker-data.la
+  GEN      org.freedesktop.Tracker.enums.xml
+  ITMRG  org.freedesktop.Tracker.DB.gschema.xml
+  GEN      org.freedesktop.Tracker.DB.gschema.valid
+Making all in libtracker-direct
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-am
+  CC       tracker-namespace.lo
+  CC       tracker-direct.lo
+  CCLD     libtracker-direct.la
+Making all in libtracker-remote
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-am
+  CC       tracker-json-cursor.lo
+  CC       tracker-xml-cursor.lo
+  CC       tracker-remote.lo
+  CCLD     libtracker-remote.la
+Making all in libtracker-sparql-backend
+  CC       tracker-backend.lo
+  CCLD     libtracker-sparql-1.0.la
+copying selected object files to avoid basename conflicts...
+Making all in libtracker-extract
+  CC       tracker-encoding.lo
+  CC       tracker-exif.lo
+  CC       tracker-extract-info.lo
+  CC       tracker-guarantee.lo
+  CC       tracker-iptc.lo
+  CC       tracker-module-manager.lo
+  CC       tracker-resource-helpers.lo
+  CC       tracker-utils.lo
+  CC       tracker-xmp.lo
+  CXXLD    libtracker-extract.la
+Making all in libtracker-miner
+  GEN      tracker-miner-enum-types.c
+  GEN      tracker-miner-enum-types.h
+cp tracker-miner.vapi tracker-miner-1.0.vapi
+cp tracker-miner.deps tracker-miner-1.0.deps
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-am
+  CC       tracker-monitor.lo
+  CC       tracker-data-provider.lo
+  CC       tracker-decorator.lo
+  CC       tracker-decorator-fs.lo
+  CC       tracker-enumerator.lo
+  CC       tracker-indexing-tree.lo
+  CC       tracker-miner-enum-types.lo
+  CC       tracker-miner-object.lo
+  CC       tracker-miner-online.lo
+  CC       tracker-miner-fs.lo
+  CC       tracker-crawler.lo
+  CC       tracker-file-data-provider.lo
+  CC       tracker-file-enumerator.lo
+  CC       tracker-file-notifier.lo
+  CC       tracker-file-system.lo
+  CC       tracker-priority-queue.lo
+  CC       tracker-task-pool.lo
+  CC       tracker-sparql-buffer.lo
+  CC       tracker-thumbnailer.lo
+  CC       tracker-utils.lo
+  CCLD     libtracker-miner-private.la
+  CCLD     libtracker-miner-1.0.la
+cp tracker-miner.pc tracker-miner-1.0.pc
+Making all in libtracker-control
+cp tracker-control.vapi tracker-control-1.0.vapi
+cp tracker-control.deps tracker-control-1.0.deps
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-am
+  CC       tracker-miner-manager.lo
+  CCLD     libtracker-control-1.0.la
+cp tracker-control.pc tracker-control-1.0.pc
+Making all in tracker
+  CC       tracker-main.o
+  CC       tracker-config.o
+  CC       tracker-daemon.o
+  CC       tracker-dbus.o
+  CC       tracker-extract.o
+  CC       tracker-help.o
+  CC       tracker-index.o
+  CC       tracker-info.o
+  CC       tracker-process.o
+  CC       tracker-reset.o
+  CC       tracker-search.o
+  CC       tracker-sparql.o
+  CC       tracker-sql.o
+  CC       tracker-status.o
+  CC       tracker-tag.o
+  CCLD     tracker
+Making all in miners
+Making all in fs
+  CC       tracker-config.o
+  CC       tracker-extract-watchdog.o
+  CC       tracker-main.o
+  CC       tracker-miner-files.o
+  CC       tracker-miner-files-index.o
+  CC       tracker-miner-files-peer-listener.o
+  CC       tracker-storage.o
+  CC       tracker-writeback-listener.o
+  CC       tracker-writeback-dispatcher.o
+  CC       tracker-writeback.o
+  CCLD     tracker-miner-fs
+  ITMRG  tracker-miner-fs.desktop
+  ITMRG  org.freedesktop.Tracker1.Miner.Files.service
+  GEN      org.freedesktop.Tracker.enums.xml
+  ITMRG  org.freedesktop.Tracker.Miner.Files.gschema.xml
+  GEN      org.freedesktop.Tracker.Miner.Files.gschema.valid
+rm org.freedesktop.Tracker1.Miner.Files.service.in tracker-miner-fs.desktop.in
+Making all in apps
+  CC       tracker-main.o
+  CC       tracker-miner-applications.o
+  CCLD     tracker-miner-apps
+  ITMRG  tracker-miner-apps.desktop
+  ITMRG  org.freedesktop.Tracker1.Miner.Applications.service
+rm tracker-miner-apps.desktop.in org.freedesktop.Tracker1.Miner.Applications.service.in
+Making all in user-guides
+  CC       tracker-main.o
+  CC       tracker-miner-user-guides.o
+  CCLD     tracker-miner-user-guides
+  ITMRG  tracker-miner-user-guides.desktop
+  ITMRG  org.freedesktop.Tracker1.Miner.Userguides.service
+rm org.freedesktop.Tracker1.Miner.Userguides.service.in tracker-miner-user-guides.desktop.in
+make[4]: Nothing to be done for `all-am'.
+Making all in plugins
+make[4]: Nothing to be done for `all-am'.
+Making all in tracker-store
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-am
+  CC       tracker-backup.o
+  CC       tracker-config.o
+  CC       tracker-dbus.o
+  CC       tracker-events.o
+  CC       tracker-main.o
+  CC       tracker-resources.o
+  CC       tracker-statistics.o
+  CC       tracker-status.o
+  CC       tracker-steroids.o
+  CC       tracker-store.o
+  CC       tracker-writeback.o
+  CCLD     tracker-store
+  ITMRG  tracker-store.desktop
+  GEN      org.freedesktop.Tracker.enums.xml
+  ITMRG  org.freedesktop.Tracker.gschema.xml
+  GEN      org.freedesktop.Tracker.gschema.valid
+  ITMRG  org.freedesktop.Tracker.Store.gschema.xml
+  GEN      org.freedesktop.Tracker.Store.gschema.valid
+rm tracker-store.desktop.in
+Making all in tracker-extract
+  GEN      tracker-extract-priority-dbus-stamp
+touch tracker-extract-priority-dbus-stamp
+/Applications/Xcode.app/Contents/Developer/usr/bin/make  all-am
+  CC       libextract_jpeg_la-tracker-extract-jpeg.lo
+  CCLD     libextract-jpeg.la
+  CC       libextract_tiff_la-tracker-extract-tiff.lo
+  CCLD     libextract-tiff.la
+  CC       libextract_html_la-tracker-extract-html.lo
+  CCLD     libextract-html.la

@@ -108,6 +108,7 @@ extractmodules_LTLIBRARIES += \
 rules_DATA += 10-epub.rule 10-oasis.rule 10-msoffice.rule 11-msoffice-xml.rule
 endif
 
+
 if HAVE_LIBGXPS
 extractmodules_LTLIBRARIES += libextract-xps.la
 rules_DATA += 10-xps.rule
@@ -186,6 +187,115 @@ extractmodules_LTLIBRARIES += libextract-dummy.la
 rules_DATA += 10-comics.rule
 rules_DATA += 10-ebooks.rule
 
+
+
+#tracker static lib
+libtracker_taextract_la_SOURCES = \
+tracker-config.c \
+tracker-config.h \
+tracker-extract.c \
+tracker-extract.h \
+tracker-extract-controller.c \
+tracker-extract-controller.h \
+tracker-extract-decorator.c \
+tracker-extract-decorator.h \
+tracker-extract-persistence.c \
+tracker-extract-persistence.h \
+tracker-extract-priority-dbus.c \
+tracker-extract-priority-dbus.h \
+tracker-read.c \
+tracker-read.h \
+tracker-main.c \
+tracker-main.h
+
+libtracker_taextract_la_LIBADD = \
+$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-data/libtracker-data.la \
+$(top_builddir)/src/libtracker-common/libtracker-common.la \
+$(BUILD_LIBS) \
+$(TRACKER_EXTRACT_LIBS) \
+$(LIBMAGIC_LIBS)
+
+if HAVE_LIBGSF
+libtracker_taextract_la_SOURCES += tracker-gsf.c tracker-gsf.h
+libtracker_taextract_la_CFLAGS = $(LIBGSF_CFLAGS)
+libtracker_taextract_la_LIBADD += $(LIBGSF_LIBS)
+endif
+
+#tracker static lib
+
+tracker_extract_SOURCES = \
+tracker-config.c \
+tracker-config.h \
+tracker-extract.c \
+tracker-extract.h \
+tracker-extract-controller.c \
+tracker-extract-controller.h \
+tracker-extract-decorator.c \
+tracker-extract-decorator.h \
+tracker-extract-persistence.c \
+tracker-extract-persistence.h \
+tracker-extract-priority-dbus.c \
+tracker-extract-priority-dbus.h \
+tracker-read.c \
+tracker-read.h \
+tracker-main.c \
+tracker-main.h
+
+tracker_extract_LDADD = \
+$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-data/libtracker-data.la \
+$(top_builddir)/src/libtracker-common/libtracker-common.la \
+$(BUILD_LIBS) \
+$(TRACKER_EXTRACT_LIBS) \
+$(LIBMAGIC_LIBS)
+
+if HAVE_LIBGSF
+tracker_extract_SOURCES += tracker-gsf.c tracker-gsf.h
+tracker_extract_CFLAGS = $(LIBGSF_CFLAGS)
+tracker_extract_LDADD += $(LIBGSF_LIBS)
+endif
+
+#indexer start
+
+indexer_SOURCES = \
+tracker-config.c \
+tracker-config.h \
+tracker-extract.c \
+tracker-extract.h \
+tracker-extract-decorator.c \
+tracker-extract-decorator.h \
+tracker-extract-persistence.c \
+tracker-extract-persistence.h \
+tracker-extract-priority-dbus.c \
+tracker-extract-priority-dbus.h \
+tracker-read.c \
+tracker-read.h \
+indexer-main.c \
+indexer-main.h
+
+indexer_LDADD = \
+$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-data/libtracker-data.la \
+$(top_builddir)/src/libtracker-common/libtracker-common.la \
+$(BUILD_LIBS) \
+$(TRACKER_EXTRACT_LIBS) \
+$(LIBMAGIC_LIBS)
+
+if HAVE_LIBGSF
+indexer_SOURCES += tracker-gsf.c tracker-gsf.h
+indexer_CFLAGS = $(LIBGSF_CFLAGS)
+indexer_LDADD += $(LIBGSF_LIBS)
+endif
+
+#indexer end
+
 # ABW
 libextract_abw_la_SOURCES = tracker-extract-abw.c
 libextract_abw_la_CFLAGS = $(TRACKER_EXTRACT_MODULES_CFLAGS)
@@ -229,30 +339,43 @@ libextract_flac_la_LIBADD = \
 	$(LIBFLAC_LIBS)
 
 # Oasis
-libextract_oasis_la_SOURCES = tracker-extract-oasis.c
+libextract_oasis_la_SOURCES = tracker-extract-oasis.c  $(tracker_extract_SOURCES)
 libextract_oasis_la_CFLAGS = \
 	$(TRACKER_EXTRACT_MODULES_CFLAGS) \
-	$(LIBGSF_CFLAGS)
+	$(LIBGSF_CFLAGS) \
+    $(LIBMAGIC_CFLAGS)
 libextract_oasis_la_LDFLAGS = $(module_flags)
 libextract_oasis_la_LIBADD = \
-	$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
-	$(top_builddir)/src/libtracker-common/libtracker-common.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-data/libtracker-data.la \
+$(top_builddir)/src/libtracker-common/libtracker-common.la \
 	$(BUILD_LIBS) \
 	$(TRACKER_EXTRACT_MODULES_LIBS) \
-	$(LIBGSF_LIBS)
+	$(LIBGSF_LIBS) \
+    $(LIBMAGIC_LIBS)
 
 # EPub
-libextract_epub_la_SOURCES = tracker-extract-epub.c
+libextract_epub_la_SOURCES = tracker-extract-epub.c $(tracker_extract_SOURCES)
 libextract_epub_la_CFLAGS = \
 	$(TRACKER_EXTRACT_MODULES_CFLAGS) \
-	$(LIBGSF_CFLAGS)
+	$(LIBGSF_CFLAGS) \
+    $(LIBMAGIC_CFLAGS)
 libextract_epub_la_LDFLAGS = $(module_flags)
 libextract_epub_la_LIBADD = \
-	$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
-	$(top_builddir)/src/libtracker-common/libtracker-common.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-data/libtracker-data.la \
+$(top_builddir)/src/libtracker-common/libtracker-common.la \
 	$(BUILD_LIBS) \
 	$(TRACKER_EXTRACT_MODULES_LIBS) \
-	$(LIBGSF_LIBS)
+	$(LIBGSF_LIBS) \
+    $(LIBMAGIC_LIBS)
+
 
 # PNG
 libextract_png_la_SOURCES = tracker-extract-png.c
@@ -288,41 +411,62 @@ libextract_xmp_la_LIBADD = \
 	$(TRACKER_EXTRACT_MODULES_LIBS)
 
 # HTML
-libextract_html_la_SOURCES = tracker-extract-html.c
+libextract_html_la_SOURCES = tracker-extract-html.c tracker-main.c  tracker-config.c  tracker-extract.c  tracker-extract-controller.c  tracker-extract-decorator.c  tracker-extract-persistence.c  tracker-extract-priority-dbus.c tracker-read.c
 libextract_html_la_CFLAGS = \
 	$(TRACKER_EXTRACT_MODULES_CFLAGS) \
-	$(LIBXML2_CFLAGS)
+	$(LIBXML2_CFLAGS) \
+    $(LIBMAGIC_CFLAGS)
+
 libextract_html_la_LDFLAGS = $(module_flags)
 libextract_html_la_LIBADD = \
 	$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+    $(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
+    $(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
+    $(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+    $(top_builddir)/src/libtracker-data/libtracker-data.la \
+    $(top_builddir)/src/libtracker-common/libtracker-common.la \
 	$(BUILD_LIBS) \
 	$(TRACKER_EXTRACT_MODULES_LIBS) \
-	$(LIBXML2_LIBS)
+	$(LIBXML2_LIBS) \
+    $(LIBMAGIC_LIBS)
 
 # MS Office
-libextract_msoffice_la_SOURCES = tracker-extract-msoffice.c
+libextract_msoffice_la_SOURCES = tracker-extract-msoffice.c $(tracker_extract_SOURCES)
 libextract_msoffice_la_CFLAGS = \
 	$(TRACKER_EXTRACT_MODULES_CFLAGS) \
 	$(LIBGSF_CFLAGS)
+	$(LIBMAGIC_CFLAGS)
 libextract_msoffice_la_LDFLAGS = $(module_flags)
 libextract_msoffice_la_LIBADD = \
-	$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
-	$(top_builddir)/src/libtracker-common/libtracker-common.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-data/libtracker-data.la \
+$(top_builddir)/src/libtracker-common/libtracker-common.la \
 	$(BUILD_LIBS) \
 	$(TRACKER_EXTRACT_MODULES_LIBS) \
-	$(LIBGSF_LIBS)
+	$(LIBGSF_LIBS) \
+	$(LIBMAGIC_LIBS)
 
 # MS Office XML
-libextract_msoffice_xml_la_SOURCES = tracker-extract-msoffice-xml.c
+libextract_msoffice_xml_la_SOURCES = tracker-extract-msoffice-xml.c $(tracker_extract_SOURCES)
 libextract_msoffice_xml_la_CFLAGS = \
 	$(TRACKER_EXTRACT_MODULES_CFLAGS) \
 	$(LIBGSF_CFLAGS)
+    $(LIBMAGIC_CFLAGS)
 libextract_msoffice_xml_la_LDFLAGS = $(module_flags)
 libextract_msoffice_xml_la_LIBADD = \
-	$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
-	$(top_builddir)/src/libtracker-common/libtracker-common.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-data/libtracker-data.la \
+$(top_builddir)/src/libtracker-common/libtracker-common.la \
 	$(BUILD_LIBS) \
-	$(TRACKER_EXTRACT_MODULES_LIBS)
+	$(TRACKER_EXTRACT_MODULES_LIBS) \
+    $(LIBGSF_LIBS) \
+    $(LIBMAGIC_LIBS)
 
 # XPS
 libextract_xps_la_SOURCES = tracker-extract-xps.c
@@ -338,17 +482,25 @@ libextract_xps_la_LIBADD = \
 	$(LIBGXPS_LIBS)
 
 # PDF
-libextract_pdf_la_SOURCES = tracker-extract-pdf.c
+libextract_pdf_la_SOURCES = tracker-extract-pdf.c $(tracker_extract_SOURCES)
 libextract_pdf_la_CFLAGS = \
 	$(TRACKER_EXTRACT_MODULES_CFLAGS) \
-	$(POPPLER_CFLAGS)
+	$(POPPLER_CFLAGS) \
+    $(LIBGSF_CFLAGS) \
+    $(LIBMAGIC_CFLAGS)
 libextract_pdf_la_LDFLAGS = $(module_flags)
 libextract_pdf_la_LIBADD = \
-	$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
-	$(top_builddir)/src/libtracker-common/libtracker-common.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-data/libtracker-data.la \
+$(top_builddir)/src/libtracker-common/libtracker-common.la \
 	$(BUILD_LIBS) \
 	$(TRACKER_EXTRACT_MODULES_LIBS) \
-	$(POPPLER_LIBS)
+	$(POPPLER_LIBS) \
+    $(LIBGSF_LIBS) \
+    $(LIBMAGIC_LIBS)
 
 # DVI
 libextract_dvi_la_SOURCES = tracker-extract-dvi.c
@@ -433,6 +585,8 @@ libextract_playlist_la_SOURCES = tracker-extract-playlist.c
 libextract_playlist_la_CFLAGS = \
 	$(TRACKER_EXTRACT_MODULES_CFLAGS) \
 	$(TOTEM_PL_PARSER_CFLAGS)
+    $(LIBGIF_CFLAGS)
+
 libextract_playlist_la_LDFLAGS = $(module_flags)
 libextract_playlist_la_LIBADD = \
 	$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
@@ -441,13 +595,23 @@ libextract_playlist_la_LIBADD = \
 	$(TOTEM_PL_PARSER_LIBS)
 
 # TEXT
-libextract_text_la_SOURCES = tracker-extract-text.c
-libextract_text_la_CFLAGS = $(TRACKER_EXTRACT_MODULES_CFLAGS)
+libextract_text_la_SOURCES = tracker-extract-text.c $(tracker_extract_SOURCES)
+libextract_text_la_CFLAGS = $(TRACKER_EXTRACT_MODULES_CFLAGS) \
+$(LIBTIFF_CFLAGS) \
+$(LIBGSF_CFLAGS) \
+$(LIBMAGIC_CFLAGS)
 libextract_text_la_LDFLAGS = $(module_flags)
 libextract_text_la_LIBADD = \
-	$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
+$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
+$(top_builddir)/src/libtracker-data/libtracker-data.la \
+$(top_builddir)/src/libtracker-common/libtracker-common.la \
 	$(BUILD_LIBS) \
-	$(TRACKER_EXTRACT_MODULES_LIBS)
+	$(TRACKER_EXTRACT_MODULES_LIBS) \
+    $(LIBGSF_LIBS) \
+    $(LIBMAGIC_LIBS)
 
 # ICON
 libextract_icon_la_SOURCES = tracker-extract-icon.c
@@ -510,40 +674,10 @@ libextract_dummy_la_LIBADD = \
 	$(BUILD_LIBS) \
 	$(TRACKER_EXTRACT_MODULES_LIBS)
 
-libexec_PROGRAMS = tracker-extract
+extractmodules_LTLIBRARIES += libtracker_taextract.la
 
-tracker_extract_SOURCES = \
-	tracker-config.c \
-	tracker-config.h \
-	tracker-extract.c \
-	tracker-extract.h \
-	tracker-extract-controller.c \
-	tracker-extract-controller.h \
-	tracker-extract-decorator.c \
-	tracker-extract-decorator.h \
-	tracker-extract-persistence.c \
-	tracker-extract-persistence.h \
-	tracker-extract-priority-dbus.c \
-	tracker-extract-priority-dbus.h \
-	tracker-read.c \
-	tracker-read.h \
-	tracker-main.c \
-	tracker-main.h
 
-tracker_extract_LDADD = \
-	$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
-	$(top_builddir)/src/libtracker-miner/libtracker-miner-@TRACKER_API_VERSION@.la \
-	$(top_builddir)/src/libtracker-extract/libtracker-extract.la \
-	$(top_builddir)/src/libtracker-data/libtracker-data.la \
-	$(top_builddir)/src/libtracker-common/libtracker-common.la \
-	$(BUILD_LIBS) \
-	$(TRACKER_EXTRACT_LIBS)
-
-if HAVE_LIBGSF
-tracker_extract_SOURCES += tracker-gsf.c tracker-gsf.h
-tracker_extract_CFLAGS = $(LIBGSF_CFLAGS)
-tracker_extract_LDADD += $(LIBGSF_LIBS)
-endif
+libexec_PROGRAMS = tracker-extract indexer
 
 # do nothing, output as a side-effect
 tracker-extract-priority-dbus.c: tracker-extract-priority-dbus-stamp

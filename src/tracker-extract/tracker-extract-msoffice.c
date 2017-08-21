@@ -40,6 +40,9 @@
 #include "tracker-main.h"
 #include "tracker-gsf.h"
 
+void pop_data_timed (double seconds);
+void maybe_callback_with_data(TrackerExtractInfo *info,GString *content);
+
 /* Powerpoint files comprise of structures. Each structure contains a
  * header. Within that header is a record type that specifies what
  * strcture it is. It is called record type.
@@ -619,7 +622,8 @@ ppt_seek_header (GsfInput *stream,
 static gchar *
 extract_powerpoint_content (GsfInfile *infile,
                             gsize      max_bytes,
-                            gboolean  *is_encrypted)
+                            gboolean  *is_encrypted,
+                            TrackerExtractInfo *info)
 {
 	/* Try to find Powerpoint Document stream */
 	GsfInput *stream;
@@ -727,6 +731,19 @@ extract_powerpoint_content (GsfInfile *infile,
 				                                      &bytes_remaining,
 				                                      &all_texts);
 			}
+                   if (all_texts && all_texts->len > 100*1024) {
+                       parsed_data_availble cb = tracker_extract_info_get_callback(info);
+                       if (cb) {
+                           GFile *file = tracker_extract_info_get_file (info);
+                           gchar *path = g_file_get_path (file);
+                           gchar *data = g_string_free (all_texts, FALSE);;
+                           cb(data,tracker_extract_info_get_callback_context(info),path);
+                           g_free(data);
+                           g_free(path);
+                           all_texts = NULL;
+                           pop_data_timed (0.2);
+                       }
+                   }
 		}
 
 		g_free (buffer);
@@ -769,7 +786,8 @@ open_file (const gchar *filename, FILE *file)
 static gchar *
 extract_msword_content (GsfInfile *infile,
                         gsize      n_bytes,
-                        gboolean  *is_encrypted)
+                        gboolean  *is_encrypted,
+                        TrackerExtractInfo *info)
 {
 	GsfInput *document_stream, *table_stream;
 	gint16 i = 0;
@@ -952,7 +970,19 @@ extract_msword_content (GsfInfile *infile,
 
 		/* Go on to next piece */
 		i++;
-	}
+        if (content && content->len > 100*1024) {
+            parsed_data_availble cb = tracker_extract_info_get_callback(info);
+            if (cb) {
+                GFile *file = tracker_extract_info_get_file (info);
+                gchar *path = g_file_get_path (file);
+                gchar *data = g_string_free (content, FALSE);;
+                cb(data,tracker_extract_info_get_callback_context(info),path);
+                g_free(data);
+                g_free(path);
+                content = NULL;
+                pop_data_timed (0.2);
+            }
+        }	}
 
 	g_free (text_buffer);
 	g_object_unref (document_stream);
@@ -1407,7 +1437,8 @@ xls_get_extended_record_string (GsfInput  *stream,
 static gchar*
 extract_excel_content (GsfInfile *infile,
                        gsize      n_bytes,
-                       gboolean  *is_encrypted)
+                       gboolean  *is_encrypted,
+                       TrackerExtractInfo *info)
 {
 	ExcelBiffHeader header1;
 	GString *content = NULL;
@@ -1524,14 +1555,26 @@ extract_excel_content (GsfInfile *infile,
 		if (gsf_input_seek (stream, header1.length, G_SEEK_CUR)) {
 			break;
 		}
-	}
+        if (content && content->len > 100*1024) {
+            parsed_data_availble cb = tracker_extract_info_get_callback(info);
+            if (cb) {
+                GFile *file = tracker_extract_info_get_file (info);
+                gchar *path = g_file_get_path (file);
+                gchar *data = g_string_free (content, FALSE);;
+                cb(data,tracker_extract_info_get_callback_context(info),path);
+                g_free(data);
+                g_free(path);
+                content = NULL;
+                pop_data_timed (0.2);
+            }
+        }	}
 
 	g_object_unref (stream);
 
 	g_debug ("Bytes extracted: %" G_GSIZE_FORMAT,
 	         n_bytes - n_bytes_remaining);
 
-	return content ? g_string_free (content, FALSE) : NULL;
+	return (content && content->len) ? g_string_free (content, FALSE) : NULL;
 }
 
 /**
@@ -1675,17 +1718,17 @@ tracker_extract_get_metadata (TrackerExtractInfo *info)
 
 	if (g_ascii_strcasecmp (mime_used, "application/msword") == 0) {
 		/* Word file */
-		content = extract_msword_content (infile, max_bytes, &is_encrypted);
+		content = extract_msword_content (infile, max_bytes, &is_encrypted,info);
 	} else if (g_ascii_strcasecmp (mime_used, "application/vnd.ms-powerpoint") == 0) {
 		/* PowerPoint file */
 		tracker_resource_add_uri (metadata, "rdf:type", "nfo:Presentation");
 
-		content = extract_powerpoint_content (infile, max_bytes, &is_encrypted);
+		content = extract_powerpoint_content (infile, max_bytes, &is_encrypted,info);
 	} else if (g_ascii_strcasecmp (mime_used, "application/vnd.ms-excel") == 0) {
 		/* Excel File */
 		tracker_resource_add_uri(metadata, "rdf:type", "nfo:Spreadsheet");
 
-		content = extract_excel_content (infile, max_bytes, &is_encrypted);
+		content = extract_excel_content (infile, max_bytes, &is_encrypted,info);
 	} else {
 		g_message ("Mime type was not recognised:'%s'", mime_used);
 	}
@@ -1711,3 +1754,49 @@ tracker_extract_get_metadata (TrackerExtractInfo *info)
 
 	return TRUE;
 }
+
+void maybe_callback_with_data(TrackerExtractInfo *info,GString *content){
+if (content && content->len > 100*1024) {
+    parsed_data_availble cb = tracker_extract_info_get_callback(info);
+    if (cb) {
+        GFile *file = tracker_extract_info_get_file (info);
+        gchar *path = g_file_get_path (file);
+        gchar *data = g_string_free (content, FALSE);;
+        cb(data,tracker_extract_info_get_callback_context(info),path);
+        g_free(data);
+        g_free(path);
+        content = NULL;
+        pop_data_timed (0.2);
+    }
+}
+}
+
+//dummy timed wait
+
+void
+pop_data_timed (double seconds)
+{
+    GMutex data_mutex;
+    GCond data_cond;
+    
+    g_mutex_init(&data_mutex);
+    g_cond_init(&data_cond);
+    gint64 end_time;
+    gpointer data = NULL;
+    
+    g_mutex_lock (&data_mutex);
+    
+    end_time = g_get_monotonic_time () + seconds * G_TIME_SPAN_SECOND;
+    if (!g_cond_wait_until (&data_cond, &data_mutex, end_time))
+    {
+        // timeout has passed.
+        g_mutex_unlock (&data_mutex);
+        goto done;
+    }
+    
+done:
+    g_cond_clear(&data_cond);
+    g_mutex_unlock (&data_mutex);
+    g_mutex_clear(&data_mutex);
+}
+

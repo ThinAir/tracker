@@ -85,6 +85,12 @@ if libpng.found()
   modules += [['extract-png', 'tracker-extract-png.c', '10-png.rule', [libpng, tracker_common_dep]]]
 endif
 
+#if libmagic.found()
+#  modules += [['tracker-extract-msoffice-xml', 'tracker-extract-msoffice-xml.c', '11-msoffice-xml.rule', [libmagic]]]
+#endif
+
+
+
 if get_option('ps')
   modules += [['extract-ps', 'tracker-extract-ps.c', '10-ps.rule', [tracker_common_dep]]]
 endif
@@ -152,6 +158,8 @@ if libgsf.found()
   tracker_extract_sources += 'tracker-gsf.c'
   tracker_extract_dependencies += libgsf
 endif
+
+
 
 executable('tracker-extract',
   tracker_extract_sources,

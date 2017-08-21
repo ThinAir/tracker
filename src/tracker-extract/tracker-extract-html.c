@@ -43,7 +43,7 @@ typedef struct {
 	guint has_description : 1;
 	GString *title;
 	GString *plain_text;
-	guint n_bytes_remaining;
+	gint n_bytes_remaining;
 } parser_data;
 
 static gboolean

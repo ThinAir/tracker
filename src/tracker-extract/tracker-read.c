@@ -120,7 +120,8 @@ process_chunk (const gchar  *read_bytes,
 			         "not indexing file");
 			return FALSE;
 		}
-
+//Do we need this check
+/*
 		if (read_size == buffer_size) {
 			const gchar *i;
 			gboolean eol_found = FALSE;
@@ -141,6 +142,7 @@ process_chunk (const gchar  *read_bytes,
 				return FALSE;
 			}
 		}
+ */
 	}
 
 	/* Update remaining bytes */
@@ -382,3 +384,52 @@ tracker_read_text_from_fd (gint  fd,
 	/* Validate UTF-8 if something was read, and return it */
 	return s ? process_whole_string (s) : NULL;
 }
+
+gchar *tracker_read_text_chunk_from_fd_ (gint  fd,
+                                  gsize max_bytes,FILE **fz,gsize *n_bytes_remaining){
+    
+    GString *s = NULL;
+    
+    //g_return_val_if_fail (fz!=NULL, NULL);
+    //g_return_val_if_fail (n_bytes_remaining!=NULL, NULL);
+
+    if (*fz==NULL) {
+        if ((*fz = fdopen (fd, "r")) == NULL) {
+            g_warning ("Cannot read from FD... could not extract text");
+            close (fd);
+            return NULL;
+        }
+        *n_bytes_remaining = max_bytes;
+    }
+
+    gsize n_bytes_read;
+    gchar buf[BUFFER_SIZE];
+    
+    /* Read bytes */
+    n_bytes_read = fread (buf,
+                          1,
+                          MIN (BUFFER_SIZE, *n_bytes_remaining),
+                          *fz);
+    
+    /* Process read bytes, and halt loop if needed */
+    gboolean processed = process_chunk (buf,
+                        n_bytes_read,
+                        BUFFER_SIZE,
+                        n_bytes_remaining,
+                                        &s);
+    
+    if (!processed) {
+#ifdef HAVE_POSIX_FADVISE
+        if (posix_fadvise (fd, 0, 0, POSIX_FADV_DONTNEED) != 0)
+            g_warning ("posix_fadvise() call failed: %m");
+#endif /* HAVE_POSIX_FADVISE */
+        fclose (*fz);
+        return NULL;
+
+    }
+    
+    /* Validate UTF-8 if something was read, and return it */
+    return s ? process_whole_string (s) : NULL;
+
+}
+
