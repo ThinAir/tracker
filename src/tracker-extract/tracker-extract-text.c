@@ -115,11 +115,12 @@ get_file_content (GFile *file,
             if (text) {
                 cb(text,tracker_extract_info_get_callback_context(info),path);
             }
-            g_free(text);
             if (text==NULL) {
                 break;
             }
-            pop_data_timed(0.2);
+            g_free(text);
+            text=NULL;
+            pop_data_timed(0.05);
         }while (bytes_remaining>0);
     }
     else{
