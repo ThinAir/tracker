@@ -50,7 +50,7 @@ tracker_extract_new_artist (const char *name)
 
 	g_return_val_if_fail (name != NULL, NULL);
 
-	uri = tracker_sparql_escape_uri_printf ("urn:artist:%s", name);
+	uri = tracker_escape_uri_printf ("urn:artist:%s", name);
 
 	artist = tracker_resource_new (uri);
 
@@ -85,7 +85,7 @@ tracker_extract_new_contact (const char *fullname)
 
 	g_return_val_if_fail (fullname != NULL, NULL);
 
-	uri = tracker_sparql_escape_uri_printf ("urn:contact:%s", fullname);
+	uri = tracker_escape_uri_printf ("urn:contact:%s", fullname);
 
 	publisher = tracker_resource_new (uri);
 
@@ -122,7 +122,7 @@ tracker_extract_new_equipment (const char *make,
 
 	g_return_val_if_fail (make != NULL || model != NULL, NULL);
 
-	equip_uri = tracker_sparql_escape_uri_printf ("urn:equipment:%s:%s:", make ? make : "", model ? model : "");
+	equip_uri = tracker_escape_uri_printf ("urn:equipment:%s:%s:", make ? make : "", model ? model : "");
 
 	equipment = tracker_resource_new (equip_uri);
 	tracker_resource_set_uri (equipment, "rdf:type", "nfo:Equipment");
@@ -182,7 +182,7 @@ tracker_extract_new_location (const char *street_address,
 		TrackerResource *address;
 		gchar *addruri;
 
-		addruri = tracker_sparql_get_uuid_urn ();
+		addruri = tracker_get_uuid_urn ();
 		address = tracker_resource_new (addruri);
 
 		tracker_resource_set_string (address, "rdf:type", "nco:PostalAddress");
@@ -272,7 +272,7 @@ tracker_extract_new_music_album_disc (const char      *album_title,
 	if (date)
 		g_string_append_printf (album_uri, ":%s", date);
 
-	tmp_album_uri = tracker_sparql_escape_uri (album_uri->str);
+	tmp_album_uri = tracker_escape_uri (album_uri->str);
 	album = tracker_resource_new (tmp_album_uri);
 
 	tracker_resource_set_uri (album, "rdf:type", "nmm:MusicAlbum");
@@ -293,7 +293,7 @@ tracker_extract_new_music_album_disc (const char      *album_title,
 
 	g_string_append_printf (disc_uri, ":Disc%d", disc_number);
 
-	tmp_disc_uri = tracker_sparql_escape_uri (disc_uri->str);
+	tmp_disc_uri = tracker_escape_uri (disc_uri->str);
 	album_disc = tracker_resource_new (tmp_disc_uri);
 
 	tracker_resource_set_uri (album_disc, "rdf:type", "nmm:MusicAlbumDisc");
@@ -327,7 +327,7 @@ tracker_extract_new_tag (const char *label)
 	TrackerResource *tag;
 	char *uri;
 
-	uri = tracker_sparql_escape_uri_printf ("urn:tag:%s", label);
+	uri = tracker_escape_uri_printf ("urn:tag:%s", label);
 	tag = tracker_resource_new (uri);
 
 	tracker_resource_set_uri (tag, "rdf:type", "nao:Tag");
@@ -336,3 +336,109 @@ tracker_extract_new_tag (const char *label)
 	g_free (uri);
 	return tag;
 }
+
+
+gchar *
+tracker_escape_uri_vprintf (const gchar *format,
+                                   va_list      args)
+{
+    GString *format1;
+    GString *format2;
+    GString *result = NULL;
+    gchar *output1 = NULL;
+    gchar *output2 = NULL;
+    const char *p;
+    gchar *op1, *op2;
+    va_list args2;
+    
+    format1 = g_string_new (NULL);
+    format2 = g_string_new (NULL);
+    p = format;
+    while (TRUE) {
+        const char *after;
+        const char *conv = find_conversion (p, &after);
+        if (!conv)
+            break;
+        
+        g_string_append_len (format1, conv, after - conv);
+        g_string_append_c (format1, 'X');
+        g_string_append_len (format2, conv, after - conv);
+        g_string_append_c (format2, 'Y');
+        
+        p = after;
+    }
+    
+    /* Use them to format the arguments
+     */
+    G_VA_COPY (args2, args);
+    
+    output1 = g_strdup_vprintf (format1->str, args);
+    va_end (args);
+    if (!output1) {
+        va_end (args2);
+        goto cleanup;
+    }
+    
+    output2 = g_strdup_vprintf (format2->str, args2);
+    va_end (args2);
+    if (!output2)
+        goto cleanup;
+    
+    result = g_string_new (NULL);
+    
+    op1 = output1;
+    op2 = output2;
+    p = format;
+    while (TRUE) {
+        const char *after;
+        const char *output_start;
+        const char *conv = find_conversion (p, &after);
+        char *escaped;
+        
+        if (!conv) {
+            g_string_append_len (result, p, after - p);
+            break;
+        }
+        
+        g_string_append_len (result, p, conv - p);
+        output_start = op1;
+        while (*op1 == *op2) {
+            op1++;
+            op2++;
+        }
+        
+        *op1 = '\0';
+        escaped = g_uri_escape_string (output_start, G_URI_RESERVED_CHARS_ALLOWED_IN_PATH_ELEMENT, FALSE);
+        g_string_append (result, escaped);
+        g_free (escaped);
+        
+        p = after;
+        op1++;
+        op2++;
+    }
+    
+cleanup:
+    g_string_free (format1, TRUE);
+    g_string_free (format2, TRUE);
+    g_free (output1);
+    g_free (output2);
+    
+    if (result)
+        return g_string_free (result, FALSE);
+    else
+        return NULL;
+}
+
+gchar *
+tracker_escape_uri_printf (const gchar *format, ...)
+{
+    gchar *result;
+    va_list args;
+    
+    va_start (args, format);
+    result = tracker_escape_uri_vprintf (format, args);
+    va_end (args);
+    
+    return result;
+}
+

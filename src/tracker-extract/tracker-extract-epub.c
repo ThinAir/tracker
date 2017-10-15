@@ -377,7 +377,7 @@ opf_xml_text_handler (GMarkupParseContext   *context,
 		}
 
 		/* Role details */
-		role_uri = tracker_sparql_escape_uri_printf ("urn:artist:%s", fullname);
+		role_uri = fullname;
 
 		if (data->element == OPF_TAG_TYPE_AUTHOR) {
 			role_str = "nco:creator";
@@ -421,7 +421,7 @@ opf_xml_text_handler (GMarkupParseContext   *context,
 
 		if (role_uri) {
 			tracker_resource_set_relation (contact, role_str, artist);
-			g_free (role_uri);
+			//g_free (role_uri);
 		}
 
 		tracker_resource_set_relation (data->resource, "nco:creator", contact);

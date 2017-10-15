@@ -141,8 +141,6 @@ tracker_extract_priority_dbus = gnome.gdbus_codegen(
 tracker_extract_sources = [
   'tracker-config.c',
   'tracker-extract.c',
-  'tracker-extract-controller.c',
-  'tracker-extract-decorator.c',
   'tracker-extract-persistence.c',
   'tracker-read.c',
   'tracker-main.c',
@@ -150,8 +148,7 @@ tracker_extract_sources = [
 ]
 
 tracker_extract_dependencies = [
-  tracker_common_dep, tracker_data_dep, tracker_extract_dep,
-  tracker_miner_dep, tracker_sparql_dep
+  tracker_common_dep, tracker_extract_dep,
 ]
 
 if libgsf.found()

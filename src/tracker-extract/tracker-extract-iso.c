@@ -29,7 +29,7 @@
 #include <gio/gio.h>
 
 #include <libtracker-extract/tracker-extract.h>
-#include <libtracker-sparql/tracker-sparql.h>
+#include <libtracker-extract/tracker-resource.h>
 
 G_MODULE_EXPORT gboolean
 tracker_extract_get_metadata (TrackerExtractInfo *info_)

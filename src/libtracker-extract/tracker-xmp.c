@@ -1118,12 +1118,12 @@ tracker_xmp_apply_regions_to_resource (TrackerResource *resource,
 		gchar *uuid;
 
 		region = (TrackerXmpRegion *) iter->data;
-		uuid = tracker_sparql_get_uuid_urn ();
+		uuid = "none";
 
 		region_resource = tracker_resource_new (uuid);
 		tracker_resource_set_uri (region_resource, "rdf:type", "nfo:RegionOfInterest");
 
-		g_free (uuid);
+		//g_free (uuid);
 
 		if (region->title) {
 			tracker_resource_set_string (region_resource, "nie:title", region->title);

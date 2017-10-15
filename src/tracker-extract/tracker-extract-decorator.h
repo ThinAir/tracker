@@ -21,7 +21,7 @@
 #define __TRACKER_EXTRACT_DECORATOR_H__
 
 #include <gio/gio.h>
-#include <libtracker-miner/tracker-miner.h>
+//#include <libtracker-miner/tracker-miner.h>
 
 #include "tracker-extract.h"
 

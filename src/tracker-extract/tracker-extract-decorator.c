@@ -19,10 +19,10 @@
 
 #include "config.h"
 
-#include <libtracker-sparql/tracker-sparql.h>
+#include <libtracker-extract/tracker-resource.h>
 #include <libtracker-extract/tracker-extract.h>
 
-#include "tracker-extract-decorator.h"
+//#include "tracker-extract-decorator.h"
 #include "tracker-extract-persistence.h"
 #include "tracker-extract-priority-dbus.h"
 
@@ -140,41 +140,41 @@ tracker_extract_decorator_finalize (GObject *object)
 	G_OBJECT_CLASS (tracker_extract_decorator_parent_class)->finalize (object);
 }
 
-static void
-decorator_save_info (TrackerSparqlBuilder    *sparql,
-                     TrackerExtractDecorator *decorator,
-                     TrackerDecoratorInfo    *decorator_info,
-                     TrackerExtractInfo      *info)
-{
-	const gchar *urn;
-	TrackerResource *resource = NULL;
-	gchar *sparql_command;
-
-	g_set_object (&resource, tracker_extract_info_get_resource (info));
-
-	if (resource == NULL) {
-		g_message ("Extract module returned no resource for %s",
-		           tracker_decorator_info_get_url (decorator_info));
-		/* We must still insert something into the store so that the correct
-		 * nie:dataSource triple get inserted. Otherwise, tracker-extract will
-		 * try to re-extract this file every time it starts.
-		 */
-		resource = tracker_resource_new (NULL);
-	}
-
-	urn = tracker_decorator_info_get_urn (decorator_info);
-
-	tracker_resource_set_identifier (resource, urn);
-	tracker_resource_set_uri (resource, "nie:dataSource",
-	        tracker_decorator_get_data_source (TRACKER_DECORATOR (decorator)));
-
-	sparql_command = tracker_resource_print_sparql_update (
-	        resource, NULL, TRACKER_OWN_GRAPH_URN);
-	tracker_sparql_builder_append (sparql, sparql_command);
-
-	g_object_unref (resource);
-	g_free (sparql_command);
-}
+//static void
+//decorator_save_info (TrackerSparqlBuilder    *sparql,
+//                     TrackerExtractDecorator *decorator,
+//                     TrackerDecoratorInfo    *decorator_info,
+//                     TrackerExtractInfo      *info)
+//{
+//    const gchar *urn;
+//    TrackerResource *resource = NULL;
+//    gchar *sparql_command;
+//
+//    g_set_object (&resource, tracker_extract_info_get_resource (info));
+//
+//    if (resource == NULL) {
+//        g_message ("Extract module returned no resource for %s",
+//                   tracker_decorator_info_get_url (decorator_info));
+//        /* We must still insert something into the store so that the correct
+//         * nie:dataSource triple get inserted. Otherwise, tracker-extract will
+//         * try to re-extract this file every time it starts.
+//         */
+//        resource = tracker_resource_new (NULL);
+//    }
+//
+//    urn = tracker_decorator_info_get_urn (decorator_info);
+//
+//    tracker_resource_set_identifier (resource, urn);
+//    tracker_resource_set_uri (resource, "nie:dataSource",
+//            tracker_decorator_get_data_source (TRACKER_DECORATOR (decorator)));
+//
+//    sparql_command = tracker_resource_print_sparql_update (
+//            resource, NULL, TRACKER_OWN_GRAPH_URN);
+//    tracker_sparql_builder_append (sparql, sparql_command);
+//
+//    g_object_unref (resource);
+//    g_free (sparql_command);
+//}
 
 static void
 get_metadata_cb (TrackerExtract *extract,
@@ -201,13 +201,13 @@ get_metadata_cb (TrackerExtract *extract,
 		} else {
 			g_task_return_error (task, error);
 		}
-	} else {
-		decorator_save_info (g_task_get_task_data (task),
-		                     TRACKER_EXTRACT_DECORATOR (data->decorator),
-		                     data->decorator_info, info);
-		g_task_return_boolean (task, TRUE);
-		tracker_extract_info_unref (info);
-	}
+//    } else {
+//        decorator_save_info (g_task_get_task_data (task),
+//                             TRACKER_EXTRACT_DECORATOR (data->decorator),
+//                             data->decorator_info, info);
+//        g_task_return_boolean (task, TRUE);
+//        tracker_extract_info_unref (info);
+//    }
 
 	priv->n_extracting_files--;
 	decorator_get_next_file (data->decorator);
@@ -571,32 +571,32 @@ static void
 decorator_ignore_file (GFile    *file,
                        gpointer  user_data)
 {
-	TrackerExtractDecorator *decorator = user_data;
-	TrackerSparqlConnection *conn;
-	GError *error = NULL;
-	gchar *uri, *query;
-
-	uri = g_file_get_uri (file);
-	g_message ("Extraction on file '%s' has been attempted too many times, ignoring", uri);
-
-	conn = tracker_miner_get_connection (TRACKER_MINER (decorator));
-	query = g_strdup_printf ("INSERT { GRAPH <" TRACKER_OWN_GRAPH_URN "> {"
-	                         "  ?urn nie:dataSource <" TRACKER_EXTRACT_DATA_SOURCE ">;"
-	                         "       nie:dataSource <" TRACKER_EXTRACT_FAILURE_DATA_SOURCE ">."
-	                         "} } WHERE {"
-	                         "  ?urn nie:url \"%s\""
-	                         "}", uri);
-
-	tracker_sparql_connection_update (conn, query, G_PRIORITY_DEFAULT, NULL, &error);
-
-	if (error) {
-		g_warning ("Failed to update ignored file '%s': %s",
-		           uri, error->message);
-		g_error_free (error);
-	}
-
-	g_free (query);
-	g_free (uri);
+//    TrackerExtractDecorator *decorator = user_data;
+//    TrackerSparqlConnection *conn;
+//    GError *error = NULL;
+//    gchar *uri, *query;
+//
+//    uri = g_file_get_uri (file);
+//    g_message ("Extraction on file '%s' has been attempted too many times, ignoring", uri);
+//
+//    conn = tracker_miner_get_connection (TRACKER_MINER (decorator));
+//    query = g_strdup_printf ("INSERT { GRAPH <" TRACKER_OWN_GRAPH_URN "> {"
+//                             "  ?urn nie:dataSource <" TRACKER_EXTRACT_DATA_SOURCE ">;"
+//                             "       nie:dataSource <" TRACKER_EXTRACT_FAILURE_DATA_SOURCE ">."
+//                             "} } WHERE {"
+//                             "  ?urn nie:url \"%s\""
+//                             "}", uri);
+//
+//    tracker_sparql_connection_update (conn, query, G_PRIORITY_DEFAULT, NULL, &error);
+//
+//    if (error) {
+//        g_warning ("Failed to update ignored file '%s': %s",
+//                   uri, error->message);
+//        g_error_free (error);
+//    }
+//
+//    g_free (query);
+//    g_free (uri);
 }
 
 static void

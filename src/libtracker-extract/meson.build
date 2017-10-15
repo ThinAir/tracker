@@ -5,8 +5,10 @@ libtracker_extract_sources = [
   'tracker-guarantee.c',
   'tracker-iptc.c',
   'tracker-module-manager.c',
+  'tracker-resource.c',
   'tracker-resource-helpers.c',
   'tracker-utils.c',
+  'tracker-uri.c',
   'tracker-xmp.c',
 ]
 
@@ -36,7 +38,7 @@ endif
 
 libtracker_extract = library('tracker-extract',
   libtracker_extract_sources,
-  dependencies: [tracker_common_dep, tracker_sparql_dep] + tracker_extract_dependencies,
+  dependencies: tracker_extract_dependencies,
   c_args: [
     '-DTRACKER_COMPILATION',
     '-DTRACKER_EXTRACTOR_RULES_DIR="@0@"'.format(tracker_extract_rules_dir),
@@ -48,5 +50,4 @@ libtracker_extract = library('tracker-extract',
 
 tracker_extract_dep = declare_dependency(
   link_with: libtracker_extract,
-  dependencies: [tracker_sparql_dep] + tracker_extract_dependencies,
   include_directories: srcinc)

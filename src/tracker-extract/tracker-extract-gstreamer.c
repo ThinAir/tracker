@@ -166,17 +166,17 @@ intern_artist (MetadataExtractor     *extractor,
 	if (artist_name == NULL)
 		return NULL;
 
-	artist_uri = tracker_sparql_escape_uri_printf ("urn:artist:%s", artist_name);
+	artist_uri = artist_name;
 
 	node = g_slist_find_custom (extractor->artist_list, artist_uri,
 	                            (GCompareFunc) tracker_resource_identifier_compare_func);
 	if (node) {
-		g_free (artist_uri);
+		//g_free (artist_uri);
 		return node->data;
 	}
 
 	artist = tracker_extract_new_artist (artist_name);
-	g_free (artist_uri);
+	//g_free (artist_uri);
 
 	extractor->artist_list = g_slist_prepend (extractor->artist_list, artist);
 
@@ -523,7 +523,7 @@ extractor_get_address (MetadataExtractor     *extractor,
 	if (city || country || sublocation) {
 		gchar *address_uri = NULL;
 
-		address_uri = tracker_sparql_get_uuid_urn ();
+		address_uri = "unknown";
 		address = tracker_resource_new (address_uri);
 
 		tracker_resource_set_string (address, "rdf:type", "nco:PostalAddress");
@@ -765,7 +765,7 @@ extract_track (MetadataExtractor    *extractor,
 	TrackerResource *track_performer = NULL, *track_composer = NULL;
 	gchar *track_uri;
 
-	track_uri = tracker_sparql_get_uuid_urn ();
+	track_uri = "unknown";
 	track = tracker_resource_new (track_uri);
 
 	tracker_resource_add_uri (track, "rdf:type", "nmm:MusicPiece");
@@ -799,7 +799,7 @@ extract_track (MetadataExtractor    *extractor,
 
 	tracker_resource_set_double (track, "nfo:audioOffset", toc_entry->start);
 
-	g_free (track_uri);
+	//g_free (track_uri);
 
 	return track;
 }

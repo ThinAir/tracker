@@ -27,7 +27,7 @@
 
 #include <libtracker-common/tracker-common.h>
 #include <libtracker-extract/tracker-extract.h>
-#include <libtracker-sparql/tracker-sparql.h>
+#include <libtracker-extract/tracker-resource.h>
 
 #include "tracker-main.h"
 

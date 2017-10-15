@@ -11,7 +11,6 @@ libtracker_extractdir = $(libdir)/tracker-$(TRACKER_API_VERSION)
 libtracker_extract_LTLIBRARIES = libtracker-extract.la
 
 libtracker_extract_la_LIBADD =   \
-	$(top_builddir)/src/libtracker-sparql-backend/libtracker-sparql-@TRACKER_API_VERSION@.la \
 	$(top_builddir)/src/libtracker-common/libtracker-common.la \
 	$(BUILD_LIBS)                                  \
 	$(LIBTRACKER_EXTRACT_LIBS)
@@ -31,12 +30,16 @@ libtracker_extract_la_SOURCES =  \
 	tracker-iptc.h                                 \
 	tracker-module-manager.c                       \
 	tracker-module-manager.h                       \
+    tracker-resource.c                             \
+    tracker-resource.h                             \
 	tracker-resource-helpers.c                     \
 	tracker-resource-helpers.h                     \
 	tracker-utils.c                                \
 	tracker-utils.h                                \
 	tracker-xmp.c                                  \
-	tracker-xmp.h
+	tracker-xmp.h                                  \
+    tracker-uri.c                                  \
+    tracker-uri.h
 
 noinst_HEADERS =                                       \
 	tracker-data.h                                 \

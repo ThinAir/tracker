@@ -26,8 +26,8 @@
 #error "only <libtracker-extract/tracker-extract.h> must be included directly."
 #endif
 
-#include <libtracker-sparql/tracker-sparql.h>
 #include <gio/gio.h>
+#include "tracker-resource.h"
 
 #ifdef HAVE_LIBMEDIAART
 #include <libmediaart/mediaart.h>

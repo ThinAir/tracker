@@ -844,35 +844,39 @@ tracker_extract_get_metadata_by_cmdline (TrackerExtract *object,
                 break;
             
             no_data_or_modules = FALSE;
-            
-            if (output_format == TRACKER_SERIALIZATION_FORMAT_SPARQL) {
-                char *text;
-                
-                /* If this was going into the tracker-store we'd generate a unique ID
-                 * here, so that the data persisted across file renames.
-                 */
-                tracker_resource_set_identifier (resource, uri);
-                
-                text = tracker_resource_print_sparql_update (resource, NULL, NULL);
-                
-                g_print ("%s\n \n \n", text);
-                //printf("%s\n", text);
-                g_free (text);
-            } else if (output_format == TRACKER_SERIALIZATION_FORMAT_TURTLE) {
-                char *turtle;
-                
-                /* If this was going into the tracker-store we'd generate a unique ID
-                 * here, so that the data persisted across file renames.
-                 */
-                tracker_resource_set_identifier (resource, uri);
-                
-                turtle = tracker_resource_print_turtle (resource, NULL);
-                
-                if (turtle) {
-                    g_print ("%s\n", turtle);
-                    g_free (turtle);
-                }
-            }
+            char *prop_name = "nie:plainTextContent";
+            const char *text = tracker_resource_get_first_string(resource, prop_name);
+            printf("%s\n", text);
+
+//
+//            if (output_format == TRACKER_SERIALIZATION_FORMAT_SPARQL) {
+//                char *text;
+//
+//                /* If this was going into the tracker-store we'd generate a unique ID
+//                 * here, so that the data persisted across file renames.
+//                 */
+//                tracker_resource_set_identifier (resource, uri);
+//
+//                text = tracker_resource_print_sparql_update (resource, NULL, NULL);
+//
+//                g_print ("%s\n \n \n", text);
+//                //printf("%s\n", text);
+//                g_free (text);
+//            } else if (output_format == TRACKER_SERIALIZATION_FORMAT_TURTLE) {
+//                char *turtle;
+//
+//                /* If this was going into the tracker-store we'd generate a unique ID
+//                 * here, so that the data persisted across file renames.
+//                 */
+//                tracker_resource_set_identifier (resource, uri);
+//
+//                turtle = tracker_resource_print_turtle (resource, NULL);
+//
+//                if (turtle) {
+//                    g_print ("%s\n", turtle);
+//                    g_free (turtle);
+//                }
+//            }
             
             tracker_extract_info_unref (info);
             break;
