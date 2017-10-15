@@ -187,7 +187,7 @@ tracker_extract_new_location (const char *street_address,
 
 		tracker_resource_set_string (address, "rdf:type", "nco:PostalAddress");
 
-		g_free (addruri);
+		//g_free (addruri);
 
 		if (address) {
 			tracker_resource_set_string (address, "nco:streetAddress", street_address);
@@ -442,3 +442,17 @@ tracker_escape_uri_printf (const gchar *format, ...)
     return result;
 }
 
+gchar *
+tracker_escape_uri (const gchar *uri)
+{
+    gchar *result;
+    
+    result = tracker_sparql_escape_uri_printf ("%s", uri);
+    
+    return result;
+}
+
+gchar* tracker_get_uuid_urn (void)
+{
+    return "unknown";
+}
