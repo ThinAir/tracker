@@ -29,7 +29,9 @@
 #include <unistd.h>
 
 #include <glib-object.h>
+#ifndef G_OS_WIN32
 #include <glib-unix.h>
+#endif
 #include <glib/gi18n.h>
 #include <glib/gprintf.h>
 #include <gio/gio.h>
@@ -286,7 +288,7 @@ run_standalone (TrackerConfig *config)
     
     file = g_file_new_for_commandline_arg (filename);
     uri = g_file_get_uri (file);
-    printf("passed file uri %s \n",uri);
+    printf("\\n passed file uri %s \n\n",uri);
 
 
     object = tracker_extract_new (TRUE, force_module);

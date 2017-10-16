@@ -846,7 +846,9 @@ tracker_extract_get_metadata_by_cmdline (TrackerExtract *object,
             no_data_or_modules = FALSE;
             char *prop_name = "nie:plainTextContent";
             const char *text = tracker_resource_get_first_string(resource, prop_name);
-            printf("%s\n", text);
+			printf("***** EXTRACTED DATA ********** \n \n");
+            printf("%s\n\n", text);
+			printf("***** EXTRACTED DATA ********** \n \n");
 
 //
 //            if (output_format == TRACKER_SERIALIZATION_FORMAT_SPARQL) {
