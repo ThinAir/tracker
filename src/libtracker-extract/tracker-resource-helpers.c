@@ -187,7 +187,7 @@ tracker_extract_new_location (const char *street_address,
 
 		tracker_resource_set_string (address, "rdf:type", "nco:PostalAddress");
 
-		//g_free (addruri);
+		g_free (addruri);
 
 		if (address) {
 			tracker_resource_set_string (address, "nco:streetAddress", street_address);
@@ -337,6 +337,104 @@ tracker_extract_new_tag (const char *label)
 	return tag;
 }
 
+const char *
+find_conversion (const char  *format,
+                 const char **after)
+{
+	const char *start = format;
+	const char *cp;
+
+	while (*start != '\0' && *start != '%')
+		start++;
+
+	if (*start == '\0') {
+		*after = start;
+		return NULL;
+	}
+
+	cp = start + 1;
+
+	if (*cp == '\0') {
+		*after = cp;
+		return NULL;
+	}
+
+	/* Test for positional argument.  */
+	if (*cp >= '0' && *cp <= '9') {
+		const char *np;
+
+		for (np = cp; *np >= '0' && *np <= '9'; np++)
+			;
+		if (*np == '$')
+			cp = np + 1;
+	}
+
+	/* Skip the flags.  */
+	for (;;) {
+		if (*cp == '\'' ||
+		    *cp == '-' ||
+		    *cp == '+' ||
+		    *cp == ' ' ||
+		    *cp == '#' ||
+		    *cp == '0')
+			cp++;
+		else
+			break;
+	}
+
+	/* Skip the field width.  */
+	if (*cp == '*') {
+		cp++;
+
+		/* Test for positional argument.  */
+		if (*cp >= '0' && *cp <= '9') {
+			const char *np;
+
+			for (np = cp; *np >= '0' && *np <= '9'; np++)
+				;
+			if (*np == '$')
+				cp = np + 1;
+		}
+	} else {
+		for (; *cp >= '0' && *cp <= '9'; cp++)
+			;
+	}
+
+	/* Skip the precision.  */
+	if (*cp == '.') {
+		cp++;
+		if (*cp == '*') {
+			/* Test for positional argument.  */
+			if (*cp >= '0' && *cp <= '9') {
+				const char *np;
+
+				for (np = cp; *np >= '0' && *np <= '9'; np++)
+					;
+				if (*np == '$')
+					cp = np + 1;
+			}
+		} else {
+			for (; *cp >= '0' && *cp <= '9'; cp++)
+				;
+		}
+	}
+
+	/* Skip argument type/size specifiers.  */
+	while (*cp == 'h' ||
+	       *cp == 'L' ||
+	       *cp == 'l' ||
+	       *cp == 'j' ||
+	       *cp == 'z' ||
+	       *cp == 'Z' ||
+	       *cp == 't')
+		cp++;
+
+	/* Skip the conversion character.  */
+	cp++;
+
+	*after = cp;
+	return start;
+}
 
 gchar *
 tracker_escape_uri_vprintf (const gchar *format,
@@ -456,3 +554,6 @@ gchar* tracker_get_uuid_urn (void)
 {
     return "unknown";
 }
+
+
+

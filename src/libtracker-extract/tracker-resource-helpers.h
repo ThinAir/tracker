@@ -37,6 +37,9 @@ TrackerResource *tracker_extract_new_location (const char *address, const char *
 TrackerResource *tracker_extract_new_music_album_disc (const char *album_title, TrackerResource *album_artist, int disc_number, const char *date);
 TrackerResource *tracker_extract_new_tag (const char *label);
 
+gchar* tracker_get_uuid_urn (void);
+
+gchar *
 tracker_escape_uri (const gchar *uri);
 
 gchar *
@@ -45,8 +48,9 @@ tracker_escape_uri_vprintf (const gchar *format,
 gchar *
 tracker_escape_uri_printf (const gchar *format, ...);
 
-gchar* tracker_get_uuid_urn(void);
-
+const char *
+find_conversion (const char  *format,
+                 const char **after);
 G_END_DECLS
 
 #endif /* __LIBTRACKER_EXTRACT_RESOURCE_HELPERS_H__ */
