@@ -447,7 +447,7 @@ tracker_escape_uri (const gchar *uri)
 {
     gchar *result;
     
-    result = tracker_sparql_escape_uri_printf ("%s", uri);
+    result = tracker_escape_uri_printf ("%s", uri);
     
     return result;
 }
