@@ -9,6 +9,7 @@ AM_CPPFLAGS =                                          \
 
 libtracker_extractdir = $(libdir)/tracker-$(TRACKER_API_VERSION)
 libtracker_extract_LTLIBRARIES = libtracker-extract.la
+libtracker_extract_la_LDFLAGS = -no-undefined
 
 libtracker_extract_la_LIBADD =   \
 	$(top_builddir)/src/libtracker-common/libtracker-common.la \

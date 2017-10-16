@@ -190,6 +190,7 @@ rules_DATA += 10-ebooks.rule
 
 
 #tracker static lib
+libtracker_taextract_la_LDFLAGS= $(module_flags)
 libtracker_taextract_la_SOURCES = \
 tracker-config.c \
 tracker-config.h \

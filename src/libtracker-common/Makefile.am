@@ -18,6 +18,8 @@ tracker-parser-sha1.h: $(TRACKER_PARSER_FILES)
 
 libtracker_commondir = $(libdir)/tracker-$(TRACKER_API_VERSION)
 libtracker_common_LTLIBRARIES = libtracker-common.la
+libtracker_common_la_LDFLAGS = -no-undefined
+
 
 libtracker_common_la_SOURCES = \
 	$(BUILT_SOURCES) \
